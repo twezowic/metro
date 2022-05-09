@@ -1,9 +1,6 @@
 #include "CppUnitTest.h"
 #include"../metro_route/Route.h"
 #include"../metro_route/Station.h"
-#include"../metro_display/Display.h"
-#include"../metro_display/Display_text.h"
-#include"../metro_display/Display_gui.h"
 
 
 using namespace Microsoft::VisualStudio::CppUnitTestFramework;
@@ -123,46 +120,3 @@ namespace metrotests
 			Assert::AreEqual(17, b[1].getCoordinate().y);
 		}
 	};
-	TEST_CLASS(display_text_test)
-	{
-	public:
-		TEST_METHOD(ConstructorParameterless)
-		{
-			Display_text d;
-			Assert::AreEqual(25, d.getWidht());
-			Assert::AreEqual(25, d.getHeight());
-		}
-		TEST_METHOD(ConstructorWithParameter)
-		{
-			vector<Station> col = { Station("Warsaw", 5, 7) };
-			Route route(col);
-			User user;
-			Display_text d(50, 12, route, user);
-			Assert::AreEqual(50, d.getWidht());
-			Assert::AreEqual(12, d.getHeight());
-			Assert::IsTrue(d.getRoute()[0].getName() == "Warsaw");
-			Assert::AreEqual(5, d.getRoute()[0].getCoordinate().x);
-			Assert::AreEqual(7, d.getRoute()[0].getCoordinate().y);
-		}
-	};
-	TEST_CLASS(display_gui_tests)
-	{
-	public:
-		TEST_METHOD(ConstructorParameterless)
-		{
-			Display_gui d;
-			Assert::IsTrue(d.getRoute().getStations().size() == 0);
-		}
-		TEST_METHOD(ConstructorWithParameter)
-		{
-			vector<Station> col = { Station("Warsaw", 5, 7) };
-			Route route(col);
-			User user;
-			Display_gui d(route, user);
-			Assert::IsTrue(d.getRoute()[0].getName() == "Warsaw");
-			Assert::AreEqual(5, d.getRoute()[0].getCoordinate().x);
-			Assert::AreEqual(7, d.getRoute()[0].getCoordinate().y);
-		}
-	};
-}
-	

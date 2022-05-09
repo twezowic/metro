@@ -5,14 +5,18 @@ Display_text::Display_text() noexcept
 {
 	this->width = 25;
 	this->height = 25;
-	this->route = vector<Station>{};
 	this->user = User();
 }
-Display_text::Display_text(int width, int height, Route route, User user) noexcept
+Display_text::Display_text(User user) noexcept
+{
+	this->width = 25;
+	this->height = 25;
+	this->user = User();
+}
+Display_text::Display_text(int width, int height, User user) noexcept
 {
 	this->width = width;
 	this->height = height;
-	this->route = route;
 	this->user = user;
 }
 
@@ -24,90 +28,20 @@ int Display_text::getHeight() const noexcept
 {
 	return height;
 }
-void Display_text::menu() noexcept
+void Display_text::printMenu() noexcept
 {
-	int input;
-	bool is_admin = true;
-	//bool is_admin = is_base_of<User_admin,user>::value;
-	//bool is_admin = static_cast<User_admin*>(&user);
-	user.helloWorld();
-	cout << "Welcome to metro configuration.\n\n";
-	do
-	{
-		cout << "1. Show the names of the stations.\n";
-		cout << "2. Show the map of stations.\n";
-		cout << "3. Load route from file.\n";
-		if (is_admin)
-		{
-			cout << "4. Save route to file.\n";
-			cout << "5. Add station.\n";
-			cout << "6. Remove station.\n";
-			cout << "7. Resets route.\n";
-		}
-		cout << "0. End the program.\n\n";
-		cout << "Please input the number: ";
-		cin >> input;
-		switch (input)
-		{
-		case(1):
-		{
-			for (int i = 0; i < route.getStations().size(); i++)
-			{
-				cout << i + 1 << ". " << route[i].getName() << endl;
-			}
-			break;
-		}
-		case(2):
-		{
-			printMap();
-			break;
-		}
-		case(3):
-		{
-			string filename;
-			cout << "Please input name of file: ";
-			cin >> filename;
-			readFromFile(filename, route);
-			break;
-		}
-		if (is_admin)
-		{
-			case(4):
-			{
-				string filename;
-				cout << "Please input name of file: ";
-				cin >> filename;
-				saveToFile(filename, route);
-				break;
-			}
-			case(5):
-			{
-				Station station;
-				cout << "Please input parameters of station to add: ";
-				cin >> station;
-				route += station;
-				break;
-			}
-			case(6):
-			{
-				string name;
-				cout << "Please input name of station to remove: ";
-				cin >> name;
-				route -= name;
-				break;
-			}
-			case(7):
-				route = {};
-				break;
-		}
-		default:
-			break;
-		}
-		cout << endl;
-	} while (input != 0);
+	cout << "1. Show the names of the stations.\n";
+	cout << "2. Show the map of stations.\n";
+	cout << "3. Load route from file.\n";
+	cout << "4. Save route to file.\n";
+	cout << "5. Add station.\n";
+	cout << "6. Remove station.\n";
+	cout << "7. Resets route.\n";
+	cout << "0. End the program.\n\n";
+	cout << "Please input the number: ";
 }
 
-void Display_text::printMap() noexcept
+void Display_text::printMap(Route route) noexcept
 {
 	vector<vector<char>> table;
 	for (int i = 0; i < width + 2; i++)
@@ -176,5 +110,36 @@ void Display_text::printMap() noexcept
 			cout << table[i][j];
 		}
 		cout << endl;
+	}
+}
+
+void Display_text::printStation(Station station) noexcept
+{
+	cout << "Station name: " << station.getName() << endl;
+	cout << "Coordinates: (" << station.getCoordinate().x <<", "  << station.getCoordinate().y << ")" << endl;
+}
+void Display_text::printRoute(Route route) noexcept
+{
+	for (int i = 0; i < route.getStations().size(); i++)
+	{
+		cout << i << ")";
+		printStation(route.getStations()[i]);
+	}
+}
+void Display_text::printUser(User user) noexcept
+{
+	cout << "First name: " << user.getFirstName() << endl;
+	cout << "Last name: " << user.getLastName() << endl;
+	cout << "Username: " << user.getUsername() << endl;
+	cout << "Mail: " << user.getMail();
+}
+void Display_text::printSchedule(string filename) noexcept
+{
+	ifstream file(filename);
+	string line;
+	while (!file.eof())
+	{
+		getline(file, line);
+		cout << line << endl; 
 	}
 }

@@ -4,13 +4,13 @@
 #include"../metro_user/User_admin.h"
 using namespace std;
 
+
 int main()
 {
-    Display_text display;
     Route route;
-    User_admin user;
+    User user;
+    Display_text display(user);
     readFromFile("x.txt", route);
-    display.setRoute(route);
-    display.setUser(user);
-    display.menu();
+    //display.printMap(route);
+    display.printSchedule("schedule.txt");
 }

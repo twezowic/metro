@@ -13,6 +13,6 @@ public:
 	string getPassword() const noexcept;
 	string getPassword(const User& user) const noexcept;
 
-	virtual void helloWorld() noexcept;
+	void helloWorld() noexcept;
 };
 

@@ -143,13 +143,11 @@
     <ClCompile Include="..\metro_route\Station.cpp" />
     <ClCompile Include="..\metro_user\User.cpp" />
     <ClCompile Include="..\metro_user\User_admin.cpp" />
-    <ClCompile Include="Display.cpp" />
     <ClCompile Include="Display_gui.cpp" />
     <ClCompile Include="Display_text.cpp" />
     <ClCompile Include="metro_display.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Display.h" />
     <ClInclude Include="Display_gui.h" />
     <ClInclude Include="Display_text.h" />
   </ItemGroup>
