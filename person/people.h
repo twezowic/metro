@@ -1,11 +1,11 @@
 using namespace std;
 #include <vector>
-//#include "../station/station.h"
-
+typedef int time;
 class Station;
 
 class Person
-{int idstation;
+{
+  Station* next_stop;
   vector <Station*>myroute;
 public:
     Person(Station* next_stop);
