@@ -4,7 +4,7 @@ train::train(int id1,string name1,int maxcapity1,int curent_capity1):id(id1),nam
 {
 
 }
-void train::setroute(vector <Station*> route1)
+void train::setroute(vector <int> route1)
 {
     routeid =route1;
 }
