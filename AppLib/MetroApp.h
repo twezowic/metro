@@ -9,7 +9,7 @@ public:
 	MetroApp();
 	bool hasPeople();
 	void run();
-//	friend //czytaj z pliku
+//	friend void readData();
 	void start();
 	void run();
 };
