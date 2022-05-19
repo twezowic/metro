@@ -11,5 +11,5 @@ public:
 	void run();
 //	friend void readData();
 	void start();
-	void run();
+	
 };

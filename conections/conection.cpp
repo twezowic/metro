@@ -1,10 +1,11 @@
 #include "conection.h"
-conection::conection(point* id1, point* id2,  int distance):one_wayconection(id1,id2,distance)
+#include "../station/station.h"
+conection::conection(Station* id1, Station* id2,  int distance):one_wayconection(id1,id2,distance)
 {
 
     distance2 = distance;
 }
-conection::conection(point* id1, point* id2,  int distance, int distance3):one_wayconection(id1,id2,distance)
+conection::conection(Station* id1, Station* id2,  int distance, int distance3):one_wayconection(id1,id2,distance)
 {
 
 

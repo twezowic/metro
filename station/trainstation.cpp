@@ -1,6 +1,6 @@
 #include "trainstation.h"
 
-trainstation::trainstation(string name1, int id1,int peron1,timetable& v,int x1,int y1) : station(name1, id1,v,x1,y1),perons(peron1)
+trainstation::trainstation(string name1, int id1,int peron1,int x1,int y1) : Station(name1, id1,x1,y1),perons(peron1)
 {
     for (int i = 0; i < perons; i++)
     {

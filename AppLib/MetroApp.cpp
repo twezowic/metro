@@ -1,5 +1,5 @@
 #include "MetroApp.h"
-
+/*
 MetroApp::MetroApp() {}
 
 bool MetroApp::hasPeople()
@@ -22,4 +22,4 @@ void MetroApp::run()
 		++time;
 	}
 
-}
+}*/
