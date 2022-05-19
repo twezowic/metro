@@ -17,5 +17,5 @@ public:
     string toString();
     void increasecap();
     void decreasecap();
-    void setpeople(vector <Person*> newpeople);
+    void setpeople(vector <Person*> newpeople); //@TODO
 };

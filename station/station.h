@@ -1,5 +1,6 @@
-#include "../point/point.h"
 #pragma once
+
+#include "../point/point.h"
 #include <queue>
 #include <vector>
 #include <string>
@@ -8,7 +9,7 @@
 #include "../person/people.h"
 
 using namespace std;
-class Station: public point
+class Station : public point
 {
 protected:
     string name;
@@ -16,16 +17,17 @@ protected:
     timetable mytimetable;
     vector <Person*> waiting;
 public:
-    Station(string name1, int id1,int x1=0,int x2=0);
+    Station(string name1, int id1, int x1 = 0, int x2 = 0);
     string toString();
     void add_conection(one_wayconection& id);
     void remove_conection(one_wayconection id);
     void add_timetable(train& trainname, time time1);
-    pair<train*,time> nexttrain(time time1);
+    pair<train*, time> nexttrain(time time1);
     vector <one_wayconection*> vec()
     {
         return out_conection_vec;
     }
     void setwaiting(vector <Person*> newvector);
-
+    std::vector<train*> getNextTrains(time cur_time); //@TODO returns every train on the station during the given time - empty vector is none 
+    std::vector<Person*> getWaitingList(); //@TODO
 };

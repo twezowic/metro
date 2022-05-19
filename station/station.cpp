@@ -5,10 +5,10 @@ using namespace std;
 #include <queue>
 #include <vector>
 #include <string>
-Station::Station(string name1, int id1,int x1,int y1):point(x1,y1,id1)
+Station::Station(string name1, int id1, int x1, int y1) :point(x1, y1, id1)
 {
     name = name1;
-    
+
 }
 
 string Station::toString()
@@ -33,9 +33,9 @@ void Station::remove_conection(one_wayconection id)
 }
 void  Station::add_timetable(train& trainname, time time)
 {
-   mytimetable.add_timetable(trainname,time);
+    mytimetable.add_timetable(trainname, time);
 }
-pair<train*,time> Station::nexttrain(time time)
+pair<train*, time> Station::nexttrain(time time)
 {
     return mytimetable.nextTrain(time);
 }
@@ -49,4 +49,14 @@ void Station::setwaiting(vector <Person*> newvector)
     {
         waiting.push_back(newvector[i]);
     }
+}
+
+std::vector<train*> Station::getNextTrains(time cur_time)
+{
+    return std::vector<train*>();
+}
+
+std::vector<Person*> Station::getWaitingList()
+{
+    return std::vector<Person*>();
 }

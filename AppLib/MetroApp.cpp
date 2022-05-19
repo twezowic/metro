@@ -1,5 +1,5 @@
 #include "MetroApp.h"
-/*
+
 MetroApp::MetroApp() {}
 
 bool MetroApp::hasPeople()
@@ -9,20 +9,18 @@ bool MetroApp::hasPeople()
 
 void MetroApp::start()
 {
-	//czytaj plik
-	//stworz koordynator
-
+	readData();
 }
 
 void MetroApp::run()
 {
-		while (metro.hasPeople());
-	{
-		metro_coordinator.HandleStations();
-		++time;
-	}
+	//	while (metro.hasPeople());
+	//{
+	//	metro_coordinator.HandleStations();
+	//	++time;
+	//}
 
-}*/
+}
 
 void MetroApp::readStationscsv()
 {

@@ -24,3 +24,7 @@ void train::decreasecap()
 {
     curent_capity--;
 }
+
+void train::setpeople(vector<Person*> newpeople)
+{
+}
