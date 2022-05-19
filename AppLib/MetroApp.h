@@ -9,7 +9,10 @@ public:
 	MetroApp();
 	bool hasPeople();
 	void run();
-//	friend void readData();
+	void readStationscsv();
+	void readConnectionscsv();
+	void readTrainscsv();
+	void readData();
 	void start();
 	
 };

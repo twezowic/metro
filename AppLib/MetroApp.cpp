@@ -23,3 +23,22 @@ void MetroApp::run()
 	}
 
 }*/
+
+void MetroApp::readStationscsv()
+{
+
+}
+void MetroApp::readConnectionscsv()
+{
+
+}
+void MetroApp::readTrainscsv()
+{
+
+}
+void MetroApp::readData()
+{
+	readStationscsv();
+	readConnectionscsv();
+	readTrainscsv();
+}
