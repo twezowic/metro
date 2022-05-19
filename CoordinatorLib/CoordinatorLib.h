@@ -15,9 +15,13 @@ class Coordinator
 {
 private:
 	std::vector<Station*> station_ptr_vec; // vector of pointers
-	Train* findBestTrain(std::vector<Station*> full_route, std::vector<Train*> next_trains);
+
+	// returns the best train, as well as next stop for the passeneger
+	std::pair<Train*, Station*> findBestTrain(Station* cur_stat, std::vector<Station*> full_route, std::vector<Train*> next_trains);
 	std::vector<Train*> findNextTrains(Station* station_ptr);
 	time cur_time;
+	// returns the percentage of stations shared by both vectors in order, as well as the last common station
+	std::pair<double, Station*> CompareRoutes(Station* start_stat, std::vector<Station*> person_route, std::vector<Station*> train_route); 
 public:
 	Coordinator();
 	void setTime(time starting_time);

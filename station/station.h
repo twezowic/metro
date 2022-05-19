@@ -22,7 +22,7 @@ public:
     void add_conection(one_wayconection& id);
     void remove_conection(one_wayconection id);
     void add_timetable(train& trainname, time time1);
-    pair<train*, time> nexttrain(time time1);
+    pair<std::vector<train*>, time> nexttrain(time time1); //#TODO, probably change function name to getNextTrains, or whatever
     vector <one_wayconection*> vec()
     {
         return out_conection_vec;

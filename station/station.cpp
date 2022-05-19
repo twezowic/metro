@@ -35,9 +35,10 @@ void  Station::add_timetable(train& trainname, time time)
 {
     mytimetable.add_timetable(trainname, time);
 }
-pair<train*, time> Station::nexttrain(time time)
+pair<vector<train*>, time> Station::nexttrain(time time1) //@TODO
 {
-    return mytimetable.nextTrain(time);
+    //return mytimetable.nextTrain(time);
+    return pair<vector<train*>, time>(vector<train*>{}, 0);
 }
 void Station::setwaiting(vector <Person*> newvector)
 {

@@ -7,7 +7,7 @@ void Coordinator::setTime(time starting_time) {
 	cur_time = starting_time;
 }
 
-void Coordinator::HandleStations()
+void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of his route
 {
 	for (auto stat_ite = station_ptr_vec.begin(); stat_ite != station_ptr_vec.end(); ++stat_ite)
 	{
@@ -17,58 +17,102 @@ void Coordinator::HandleStations()
 		for (auto train_ite = trains_on_station.begin(); train_ite != trains_on_station.end(); ++train_ite)
 		{
 			std::vector<Person*> new_person_in_train_vec;
-			//for (auto person_ite = (*train_ite)->getPeopleVec().begin(); person_ite != (*train_ite)->getPeopleVec().end(); ++person_ite)
-			//{
-			//	if ((*person_ite)->getNextStop() == (*stat_ite))
-			//	{
-			//		waiting_list.push_back((*person_ite));
-			//	}
-			//	else
-			//		new_person_in_train_vec.push_back((*person_ite));
-			//}
+			for (auto person_ite = (*train_ite)->getPeopleVec().begin(); person_ite != (*train_ite)->getPeopleVec().end(); ++person_ite)
+			{
+				if ((*person_ite)->getNextStop() == (*stat_ite))
+				{
+					waiting_list.push_back((*person_ite));
+				}
+				else
+					new_person_in_train_vec.push_back((*person_ite));
+			}
 			(*train_ite)->setpeople(new_person_in_train_vec);
 		}
 		std::vector<Train*> next_trains_on_station = findNextTrains(*stat_ite);
 		for (auto waiting_person_ite = waiting_list.begin(); waiting_person_ite != waiting_list.end(); ++waiting_person_ite)
 		{
 			// pytanie, try do tego nie zadziała w c++?
-			//Train* train_to_append = findBestTrain((*waiting_person_ite)->getRoute(), next_trains_on_station);
-			//if (train_to_append)
-			//	train_to_append->AddPerson(*waiting_person_ite); //co jeśli nie będzie właściwego pociągu
-			//else
-			//	waiting_list_after_operations.push_back(*waiting_person_ite);
+			std::pair<Train*, Station*> train_to_append_pair = findBestTrain((*stat_ite), (*waiting_person_ite)->getRoute(), next_trains_on_station);
+			if (train_to_append_pair.first)
+			{
+				train_to_append_pair.first->AddPerson(*waiting_person_ite);
+				(*waiting_person_ite)->setNextStop(train_to_append_pair.second);
+			}
+			else
+				waiting_list_after_operations.push_back(*waiting_person_ite);
 		}
 		(*stat_ite)->setwaiting(waiting_list_after_operations);
 	}
 
 }
-std::vector<Train*> Coordinator::findNextTrains(Station * station_ptr)
+std::vector<Train*> Coordinator::findNextTrains(Station* station_ptr)
 {
 	std::vector<Train*> train_vec;
 	size_t time_offset = cur_time;
-	for (int i = 0; i != NUMBER_OF_TRAINS; ++i)
+	int i = 0;
+	do 
 	{
-		//std::pair<std::vector<Train*>, time> train_time_pair = timetable_ptr->nextTrain(time_offset); //@TODO
-		//time_offset = train_time_pair.second + 1;
-		//train_vec.insert(train_vec.end(), train_time_pair.first.begin(), train_time_pair.first.end());
-	}
+		std::pair<std::vector<Train*>, time> train_time_pair = station_ptr->nexttrain(time_offset);
+		time_offset = train_time_pair.second + 1;
+		train_vec.insert(train_vec.end(), train_time_pair.first.begin(), train_time_pair.first.end());
+		i += train_time_pair.first.size();
+	} while (i < NUMBER_OF_TRAINS);
 	return train_vec;
 }
-Train* Coordinator::findBestTrain(std::vector<Station*> full_route, std::vector<Train*> next_trains)
+
+std::pair<double, Station*> Coordinator::CompareRoutes(Station* start_stat, std::vector<Station*> person_route, std::vector<Station*> train_route)
 {
-	for (int i = 0; i != NUMBER_OF_TRAINS; ++i)
+	auto per_route_ite = person_route.begin();
+	auto train_route_ite = train_route.begin();
+	double mutual_stations = -1; // because the loop below will always add at least one
+	double stations_left = 0;
+	Station* last_mutual_station;
+	while ((*per_route_ite) != start_stat) // move person iterator to current station
+		++per_route_ite;
+
+	while ((*train_route_ite) != start_stat) // move train iterator to current station
+		++train_route_ite;
+
+	do // count the number of stations both vectors share
 	{
-		try
-		{
-			// mój aktualny pomysł - znaleźć najlepszy pociąg jako funkcja dwóch zmiennych - czas_do_pociągu * stała_1 + procent_stacji_jakie_przejedzie * stała_2
-			// najmniejszy czas jest najlepszy
-			//timetable.getNextTrain(cur_time); //@TODO
-			//compareTrainA
-		}
-		catch (...)
-		{
+		++mutual_stations;
+		last_mutual_station = (*per_route_ite);
+		++train_route_ite;
+		++per_route_ite;
+		
+		if (per_route_ite == person_route.end()) // this means this train covers every station left for passeneger
+			return std::pair<double, Station*>(100, last_mutual_station);
+	
+		if (train_route_ite == train_route.end()) // this means the train reached it's end
 			break;
+		//return std::pair<double, Station*>(100, last_mutual_station);
+	
+	} while ((*per_route_ite) == (*train_route_ite));
+
+	while (per_route_ite != person_route.end()) // count how many stations till the last are left
+	{
+		++per_route_ite;
+		++stations_left;
+	}
+	return std::pair<double, Station*>(100 * mutual_stations / (mutual_stations + stations_left), last_mutual_station);
+}
+
+std::pair<Train*, Station*> Coordinator::findBestTrain(Station* cur_stat, std::vector<Station*> person_route, std::vector<Train*> next_trains)
+{
+	Train* train_to_assign = nullptr;
+	Station* next_stop = nullptr;
+	double cur_match = 0; // is a percentage value - 100 means 100% matched
+	for (auto train_ite = next_trains.begin(); train_ite != next_trains.end(); ++train_ite)
+	{
+		{
+			std::pair<double, Station*> data_pair = CompareRoutes(cur_stat, person_route, (*train_ite)->getRoute());
+			if (data_pair.first > cur_match)
+			{
+				cur_match = data_pair.first;
+				next_stop = data_pair.second;
+				train_to_assign = *train_ite;
+			}
 		}
 	}
-	return nullptr;
+	return std::pair<Train*, Station*>(train_to_assign, next_stop);
 }

@@ -18,4 +18,7 @@ public:
     void increasecap();
     void decreasecap();
     void setpeople(vector <Person*> newpeople); //@TODO
+    std::vector<Person*> getPeopleVec() { return people; };
+    std::vector<Station*> getRoute() { return routeid; };
+    void AddPerson(Person* new_per) {}; //@TODO
 };
