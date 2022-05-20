@@ -21,4 +21,5 @@ public:
     std::vector<Person*> getPeopleVec() { return people; };
     std::vector<Station*> getRoute() { return routeid; };
     void AddPerson(Person* new_per) {}; //@TODO
+    bool hasFreeSpace() { return true; };//@TODO
 };

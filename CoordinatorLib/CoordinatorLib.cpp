@@ -7,19 +7,31 @@ void Coordinator::setTime(time starting_time) {
 	cur_time = starting_time;
 }
 
+void Coordinator::increaseTime(time& simulation_time)
+{ // as of right now, this means - increasing the time by one minute
+	++cur_time;
+	++simulation_time;
+	if (cur_time == 1440)
+		cur_time = 0;
+}
+
 void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of his route
 {
-	for (auto stat_ite = station_ptr_vec.begin(); stat_ite != station_ptr_vec.end(); ++stat_ite)
+	for (auto stat_ite = station_vec.begin(); stat_ite != station_vec.end(); ++stat_ite)
 	{
+		std::vector<Train*> trains_on_station;
+		if ((*stat_ite).hasTrains())
+			trains_on_station = (*stat_ite).getNextTrains(cur_time);
+		else
+			trains_on_station = {};
 		std::vector<Person*> waiting_list_after_operations;
-		std::vector<Train*> trains_on_station = (*stat_ite)->getNextTrains(cur_time);
-		std::vector<Person*> waiting_list = (*stat_ite)->getWaitingList();
+		std::vector<Person*> waiting_list = (*stat_ite).getWaitingList();
 		for (auto train_ite = trains_on_station.begin(); train_ite != trains_on_station.end(); ++train_ite)
 		{
 			std::vector<Person*> new_person_in_train_vec;
 			for (auto person_ite = (*train_ite)->getPeopleVec().begin(); person_ite != (*train_ite)->getPeopleVec().end(); ++person_ite)
 			{
-				if ((*person_ite)->getNextStop() == (*stat_ite))
+				if ((*person_ite)->getNextStop() == &(*stat_ite))
 				{
 					waiting_list.push_back((*person_ite));
 				}
@@ -31,28 +43,43 @@ void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of 
 		std::vector<Train*> next_trains_on_station = findNextTrains(*stat_ite);
 		for (auto waiting_person_ite = waiting_list.begin(); waiting_person_ite != waiting_list.end(); ++waiting_person_ite)
 		{
-			// pytanie, try do tego nie zadziała w c++?
 			std::pair<Train*, Station*> train_to_append_pair = findBestTrain((*stat_ite), (*waiting_person_ite)->getRoute(), next_trains_on_station);
 			if (train_to_append_pair.first)
 			{
-				train_to_append_pair.first->AddPerson(*waiting_person_ite);
-				(*waiting_person_ite)->setNextStop(train_to_append_pair.second);
+				if (isTheTrainOnStation(train_to_append_pair.first, trains_on_station) && train_to_append_pair.first->hasFreeSpace())
+				{
+					train_to_append_pair.first->AddPerson(*waiting_person_ite);
+					(*waiting_person_ite)->setNextStop(train_to_append_pair.second);
+				}
+				else
+					waiting_list_after_operations.push_back(*waiting_person_ite);
 			}
-			else
-				waiting_list_after_operations.push_back(*waiting_person_ite);
+			else 
+				(*waiting_person_ite); //remove person function should go here
 		}
-		(*stat_ite)->setwaiting(waiting_list_after_operations);
+		(*stat_ite).setwaiting(waiting_list_after_operations);
 	}
 
 }
-std::vector<Train*> Coordinator::findNextTrains(Station* station_ptr)
+bool Coordinator::isTheTrainOnStation(Train* the_train, std::vector<Train*> trains_on_stat)
+{
+	if (find(trains_on_stat.begin(), trains_on_stat.end(), the_train) == trains_on_stat.end())
+		return false;
+	else
+		return true;
+}
+void Coordinator::addStation(Station new_stat)
+{
+	station_vec.push_back(new_stat);
+}
+std::vector<Train*> Coordinator::findNextTrains(Station& station)
 {
 	std::vector<Train*> train_vec;
 	size_t time_offset = cur_time;
 	int i = 0;
 	do 
 	{
-		std::pair<std::vector<Train*>, time> train_time_pair = station_ptr->nexttrain(time_offset);
+		std::pair<std::vector<Train*>, time> train_time_pair = station.nexttrain(time_offset);
 		time_offset = train_time_pair.second + 1;
 		train_vec.insert(train_vec.end(), train_time_pair.first.begin(), train_time_pair.first.end());
 		i += train_time_pair.first.size();
@@ -60,17 +87,17 @@ std::vector<Train*> Coordinator::findNextTrains(Station* station_ptr)
 	return train_vec;
 }
 
-std::pair<double, Station*> Coordinator::CompareRoutes(Station* start_stat, std::vector<Station*> person_route, std::vector<Station*> train_route)
+std::pair<double, Station*> Coordinator::CompareRoutes(Station& start_stat, std::vector<Station*> person_route, std::vector<Station*> train_route)
 {
 	auto per_route_ite = person_route.begin();
 	auto train_route_ite = train_route.begin();
 	double mutual_stations = -1; // because the loop below will always add at least one
 	double stations_left = 0;
 	Station* last_mutual_station;
-	while ((*per_route_ite) != start_stat) // move person iterator to current station
+	while ((*per_route_ite) != &start_stat) // move person iterator to current station
 		++per_route_ite;
 
-	while ((*train_route_ite) != start_stat) // move train iterator to current station
+	while ((*train_route_ite) != &start_stat) // move train iterator to current station
 		++train_route_ite;
 
 	do // count the number of stations both vectors share
@@ -97,7 +124,7 @@ std::pair<double, Station*> Coordinator::CompareRoutes(Station* start_stat, std:
 	return std::pair<double, Station*>(100 * mutual_stations / (mutual_stations + stations_left), last_mutual_station);
 }
 
-std::pair<Train*, Station*> Coordinator::findBestTrain(Station* cur_stat, std::vector<Station*> person_route, std::vector<Train*> next_trains)
+std::pair<Train*, Station*> Coordinator::findBestTrain(Station& cur_stat, std::vector<Station*> person_route, std::vector<Train*> next_trains)
 {
 	Train* train_to_assign = nullptr;
 	Station* next_stop = nullptr;

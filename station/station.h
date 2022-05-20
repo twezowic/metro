@@ -30,4 +30,5 @@ public:
     void setwaiting(vector <Person*> newvector);
     std::vector<train*> getNextTrains(time cur_time); //@TODO returns every train on the station during the given time - empty vector is none 
     std::vector<Person*> getWaitingList(); //@TODO
+    bool hasTrains() { return false; }; //@TODO
 };

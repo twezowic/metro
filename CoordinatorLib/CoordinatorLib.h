@@ -14,22 +14,26 @@ static int NUMBER_OF_TRAINS = 10; // number of trains coordinator will look thro
 class Coordinator
 {
 private:
-	std::vector<Station*> station_ptr_vec; // vector of pointers
+	std::vector<Station> station_vec;
+	time cur_time; // time in minutes
+
 
 	// returns the best train, as well as next stop for the passeneger
-	std::pair<Train*, Station*> findBestTrain(Station* cur_stat, std::vector<Station*> full_route, std::vector<Train*> next_trains);
-	std::vector<Train*> findNextTrains(Station* station_ptr);
-	time cur_time;
+	std::pair<Train*, Station*> findBestTrain(Station& cur_stat, std::vector<Station*> full_route, std::vector<Train*> next_trains);
+	std::vector<Train*> findNextTrains(Station& station);
 	// returns the percentage of stations shared by both vectors in order, as well as the last common station
-	std::pair<double, Station*> CompareRoutes(Station* start_stat, std::vector<Station*> person_route, std::vector<Station*> train_route); 
+	std::pair<double, Station*> CompareRoutes(Station& start_stat, std::vector<Station*> person_route, std::vector<Station*> train_route); 
 public:
 	Coordinator();
 	void setTime(time starting_time);
-	std::vector<Train*> GetTrainsOnStation(Station& stat);
-	void AddWaitingPeopleToTrains(std::vector<Person*> waiting_people, std::vector<Train*> trains_on_station);
-	std::vector<Station*> getStationsVect() const; // should be used by app, next step will be using the method getTrainsOnStation() 
+	void increaseTime(time& simulation_time);
+	void HandleStations();
+	bool isTheTrainOnStation(Train* the_train, std::vector<Train*> trains_on_stat);
+	void addStation(Station new_stat);
+
+	// functions below might be useful to refactorise the code
 	void AddPersonToTrain(Person& person, Train& train);
 	void HandleTrainOnStation(std::vector<Person*> waiting_people, Train& Train, Station& station); // appends waiting people list, removes people from train
-	void HandleStations();
-
+	void AddWaitingPeopleToTrains(std::vector<Person*> waiting_people, std::vector<Train*> trains_on_station);
+	std::vector<Train*> GetTrainsOnStation(Station& stat);
 };

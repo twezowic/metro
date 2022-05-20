@@ -12,19 +12,19 @@ void MetroApp::start()
 	readData();
 }
 
-void MetroApp::run()
+time MetroApp::run()
 {
-	//	while (metro.hasPeople());
-	//{
-	//	metro_coordinator.HandleStations();
-	//	++time;
-	//}
-
+		while (hasPeople());
+	{
+		metro_coor.HandleStations();
+		metro_coor.increaseTime(simulation_time);
+	}
+	return simulation_time;
 }
 
 void MetroApp::readStationscsv()
 {
-
+	//metro_coor.addStation(Station(data_read)
 }
 void MetroApp::readConnectionscsv()
 {
