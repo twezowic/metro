@@ -3,6 +3,11 @@
 
 	Coordinator::Coordinator() {}
 
+void Coordinator::setStations(vector<Station> stations)
+{
+		this->station_vec = stations;
+}
+
 void Coordinator::setTime(time starting_time) {
 	cur_time = starting_time;
 }

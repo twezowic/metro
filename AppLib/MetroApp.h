@@ -13,6 +13,8 @@ public:
 	time simulation_time;
 
 	MetroApp();
+	void setTrains(vector<Train> trains);
+	void setConnections(vector<conection> connections);
 	bool hasPeople();
 	time run();
 	void readStationscsv();
