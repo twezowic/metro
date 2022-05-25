@@ -13,6 +13,7 @@ static int NUMBER_OF_TRAINS = 10; // number of trains coordinator will look thro
 
 class Coordinator
 {
+	typedef int time;
 private:
 	std::vector<Station> station_vec;
 	time cur_time; // time in minutes
@@ -36,4 +37,6 @@ public:
 	void HandleTrainOnStation(std::vector<Person*> waiting_people, Train& Train, Station& station); // appends waiting people list, removes people from train
 	void AddWaitingPeopleToTrains(std::vector<Person*> waiting_people, std::vector<Train*> trains_on_station);
 	std::vector<Train*> GetTrainsOnStation(Station& stat);
+	Station* getStation(int id);
+	void setStations(vector<Station> stations);
 };

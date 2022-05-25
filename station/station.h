@@ -11,6 +11,7 @@
 using namespace std;
 class Station : public point
 {
+    typedef int time;
 protected:
     string name;
     vector <one_wayconection*> out_conection_vec;
@@ -22,13 +23,21 @@ public:
     void add_conection(one_wayconection& id);
     void remove_conection(one_wayconection id);
     void add_timetable(train& trainname, time time1);
-    pair<std::vector<train*>, time> nexttrain(time time1); //#TODO, probably change function name to getNextTrains, or whatever
+    pair<std::vector<train*>, time> nexttrain(time time1); 
     vector <one_wayconection*> vec()
     {
         return out_conection_vec;
     }
     void setwaiting(vector <Person*> newvector);
-    std::vector<train*> getNextTrains(time cur_time); //@TODO returns every train on the station during the given time - empty vector is none 
-    std::vector<Person*> getWaitingList(); //@TODO
-    bool hasTrains() { return false; }; //@TODO
+    std::vector<train*> getNextTrains(time cur_time)
+    {
+        return nexttrain(cur_time).first;
+    }
+    std::vector<Person*> getWaitingList()
+    {
+        return waiting;
+    };
+    bool hasTrains(time i) {
+        return i == nexttrain(i).second;
+    }; 
 };

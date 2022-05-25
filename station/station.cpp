@@ -35,29 +35,15 @@ void  Station::add_timetable(train& trainname, time time)
 {
     mytimetable.add_timetable(trainname, time);
 }
-pair<vector<train*>, time> Station::nexttrain(time time1) //@TODO
+pair<vector<train*>,int> Station::nexttrain(time time1) 
 {
-    //return mytimetable.nextTrain(time);
-    return pair<vector<train*>, time>(vector<train*>{}, 0);
+    return mytimetable.nextTrain(time1);
+    
 }
 void Station::setwaiting(vector <Person*> newvector)
 {
-    while (waiting.size() != 0)
-    {
-        waiting.pop_back();
-    }
-    for (int i = 0; i < newvector.size(); i++)
-    {
-        waiting.push_back(newvector[i]);
-    }
+  
+    waiting = newvector;
+    
 }
 
-std::vector<train*> Station::getNextTrains(time cur_time)
-{
-    return std::vector<train*>();
-}
-
-std::vector<Person*> Station::getWaitingList()
-{
-    return std::vector<Person*>();
-}

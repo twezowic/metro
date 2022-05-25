@@ -25,7 +25,7 @@ void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of 
 	for (auto stat_ite = station_vec.begin(); stat_ite != station_vec.end(); ++stat_ite)
 	{
 		std::vector<Train*> trains_on_station;
-		if ((*stat_ite).hasTrains())
+		if ((*stat_ite).hasTrains(1))
 			trains_on_station = (*stat_ite).getNextTrains(cur_time);
 		else
 			trains_on_station = {};
@@ -53,7 +53,7 @@ void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of 
 			{
 				if (isTheTrainOnStation(train_to_append_pair.first, trains_on_station) && train_to_append_pair.first->hasFreeSpace())
 				{
-					train_to_append_pair.first->AddPerson(*waiting_person_ite);
+					train_to_append_pair.first->AddPerson(**waiting_person_ite);
 					(*waiting_person_ite)->setNextStop(train_to_append_pair.second);
 				}
 				else
@@ -147,4 +147,15 @@ std::pair<Train*, Station*> Coordinator::findBestTrain(Station& cur_stat, std::v
 		}
 	}
 	return std::pair<Train*, Station*>(train_to_assign, next_stop);
+}
+Station* Coordinator::getStation(int id)
+{
+	for (int i = 0; i < station_vec.size(); i++)
+	{
+		if (station_vec[i].getid() == id)
+		{
+			return &station_vec[i];
+		}
+
+	}
 }

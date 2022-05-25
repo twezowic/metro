@@ -24,7 +24,7 @@ void MetroApp::start()
 	readData();
 }
 
-time MetroApp::run()
+int MetroApp::run()
 {
 		while (hasPeople());
 	{
@@ -74,8 +74,8 @@ void MetroApp::readConnectionscsv()
 			row.push_back(word);
 		
 		//add connection to connections
-		Station* station1/* = getStation(row[0])*/;
-		Station* station2/* = getStation(row[1])*/;
+		Station* station1 = getStation(row[0]);
+		Station* station2 = getStation(row[1]);
 		int distance = stoi(row[2]);
 		connections.push_back(conection(station1, station2, distance));
 	}
@@ -119,9 +119,12 @@ void MetroApp::readData()
 	readConnectionscsv();
 	readTrainscsv();
 }
+Station* MetroApp::getStation(int id)
+{
+	return metro_coor.getStation(id);
+		
+		
+	
+}
 
 
-
-
-//TODO
-//add method that give pointer to the station from station id.
