@@ -1,7 +1,7 @@
 #pragma once
 using namespace std;
 #include <vector>
-typedef int time;
+typedef int min_time;
 class Station;
 
 class Person

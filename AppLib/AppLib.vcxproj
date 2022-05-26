@@ -156,6 +156,11 @@
   <ItemGroup>
     <ClInclude Include="MetroApp.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CoordinatorLib\CoordinatorLib.vcxproj">
+      <Project>{5ca3cb2a-fe76-4018-b20f-a8b670150cc6}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
