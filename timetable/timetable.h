@@ -2,10 +2,10 @@
 #include <queue>
 class timetable
 {
-    queue<pair<train*, time>> my_timetable;
+    queue<pair<train*, min_time>> my_timetable;
 public:
     timetable();
-    void add_timetable(train& trainname, time time);
-    pair<train*,time> nextTrain(time time);
+    void add_timetable(train& trainname, min_time time);
+    pair<vector<train*>, min_time>  nextTrain(min_time time);
 };
 

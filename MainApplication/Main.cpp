@@ -7,11 +7,13 @@
 
 int main()
 {
+
 	// read stations, trains, connections from first file
 	// read people from second file
 	auto metro = MetroApp();
 	metro.start();
 	int sim_time = metro.run();
 	//std::cout << sim_time;
+
 	return 0;
 }

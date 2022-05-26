@@ -156,6 +156,17 @@
   <ItemGroup>
     <ClInclude Include="CoordinatorLib.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\station\station.vcxproj">
+      <Project>{dde6003e-b458-457c-baef-6a9e56b04cd9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\timetable\timetable.vcxproj">
+      <Project>{0c5b4b3c-d120-4144-91b7-86ef2eae2e05}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\train\train.vcxproj">
+      <Project>{73c626f0-9636-4e2d-b028-a4f7f085f844}</Project>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
