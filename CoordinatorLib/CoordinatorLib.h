@@ -10,13 +10,12 @@ typedef train Train;
 typedef timetable TimeTable;
 
 static int NUMBER_OF_TRAINS = 10; // number of trains coordinator will look through when trying to find a person a train
-
+static min_time END_OF_ROUTE_STOP = 10;
 class Coordinator
-{
-	typedef int time;
+{;
 private:
 	std::vector<Station> station_vec;
-	time cur_time; // time in minutes
+	min_time cur_time; // time in minutes
 
 
 	// returns the best train, as well as next stop for the passeneger
@@ -26,17 +25,21 @@ private:
 	std::pair<double, Station*> CompareRoutes(Station& start_stat, std::vector<Station*> person_route, std::vector<Station*> train_route); 
 public:
 	Coordinator();
-	void setTime(time starting_time);
-	void increaseTime(time& simulation_time);
+	void setTime(min_time starting_time);
+	void increaseTime(min_time& simulation_time);
 	void HandleStations();
 	bool isTheTrainOnStation(Train* the_train, std::vector<Train*> trains_on_stat);
-	void addStation(Station new_stat);
 
-	// functions below might be useful to refactorise the code
+	// methods used while starting the application
+	void addStation(Station new_stat);
+	Station* getStation(int id);
+	void setStations(vector<Station> stations);
+	void fillTimetable(std::vector<std::pair<Train, Train>>& train_pairs_vec); //@TODO
+	bool assignTrainRoute(Train& cur_train, min_time temp_time);
+
+	// methods below might be useful to refactorise the code
 	void AddPersonToTrain(Person& person, Train& train);
 	void HandleTrainOnStation(std::vector<Person*> waiting_people, Train& Train, Station& station); // appends waiting people list, removes people from train
 	void AddWaitingPeopleToTrains(std::vector<Person*> waiting_people, std::vector<Train*> trains_on_station);
 	std::vector<Train*> GetTrainsOnStation(Station& stat);
-	Station* getStation(int id);
-	void setStations(vector<Station> stations);
 };

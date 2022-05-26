@@ -31,11 +31,11 @@ void Station::remove_conection(one_wayconection id)
     }
     out_conection_vec.erase(out_conection_vec.begin() + position);
 }
-void  Station::add_timetable(train& trainname, time time)
+void  Station::add_timetable(train& trainname, min_time time)
 {
     mytimetable.add_timetable(trainname, time);
 }
-pair<vector<train*>,int> Station::nexttrain(time time1) 
+pair<vector<train*>, min_time> Station::nexttrain(min_time time1)
 {
     return mytimetable.nextTrain(time1);
     

@@ -1,13 +1,11 @@
-#include<fstream>
-#include <sstream>
 #include "MetroApp.h"
 
 
 MetroApp::MetroApp() {}
 
-void MetroApp::setTrains(vector<Train> trains)
+void MetroApp::setTrains(vector<std::pair<Train, Train>> trains_pairss)
 {
-	this->train_vec = trains;
+	this->trains_pairs = trains_pairss;
 }
 void MetroApp::setConnections(vector<conection> connections)
 {
@@ -24,7 +22,7 @@ void MetroApp::start()
 	readData();
 }
 
-int MetroApp::run()
+min_time MetroApp::run()
 {
 		while (hasPeople());
 	{
@@ -40,11 +38,12 @@ void MetroApp::readStationscsv()
 	vector<string> row;
 	string line, word;
 
-	fstream file("station.csv", ios::in);
+	fstream file("../station.csv", ios::in);
+	getline(file, line);
 	while (getline(file, line))
 	{
 		row.clear();
-
+		
 		stringstream str(line);
 
 		while (getline(str, word, ';'))
@@ -63,7 +62,8 @@ void MetroApp::readConnectionscsv()
 	vector<string> row;
 	string line, word;
 
-	fstream file("connection.csv", ios::in);
+	fstream file("../connection.csv", ios::in);
+	getline(file, line);
 	while (getline(file, line))
 	{
 		row.clear();
@@ -74,8 +74,8 @@ void MetroApp::readConnectionscsv()
 			row.push_back(word);
 		
 		//add connection to connections
-		Station* station1 = getStation(row[0]);
-		Station* station2 = getStation(row[1]);
+		Station* station1 = getStation(stoi(row[0]));
+		Station* station2 = getStation(stoi(row[1]));
 		int distance = stoi(row[2]);
 		connections.push_back(conection(station1, station2, distance));
 	}
@@ -83,11 +83,12 @@ void MetroApp::readConnectionscsv()
 }
 void MetroApp::readTrainscsv()
 {
-	vector<Train> trains;
+	vector<std::pair<Train, Train>> trains_pair;
 	vector<string> row;
 	string line, word;
 
-	fstream file("trains.csv", ios::in);
+	fstream file("../trains.csv", ios::in);
+	getline(file, line);
 	while (getline(file, line))
 	{
 		row.clear();
@@ -99,19 +100,23 @@ void MetroApp::readTrainscsv()
 
 		int id1 = stoi(row[0]);
 		string name1 = row[1];
-		int maxcapity = stoi(row[2]);
-		Train train1(id1, name1, maxcapity);
-
-		/*vector<Station*> stations;
+		int maxcapacity = stoi(row[2]);
+		Train train1(id1, name1, maxcapacity);
+		vector<Station*> stations;
 		for (int i = 3; i < row.size(); i++)
 		{
-			stations.push_back(getStation(row[0]))
+			stations.push_back(getStation(stoi(row[i])));
 		}
-		train1.setroute(stations);*/
-		trains.push_back(train1);
+		train1.setroute(stations);
+		Train train1prim(id1, name1 + "_prim", maxcapacity); // same train, but with opposite route is considered a new object
+		std::reverse(stations.begin(), stations.end());
+		train1prim.setroute(stations);
+
+
+		trains_pair.push_back(std::make_pair(train1, train1prim));
 
 	}
-	setTrains(trains);
+	setTrains(trains_pair);
 }
 void MetroApp::readData()
 {
@@ -119,6 +124,7 @@ void MetroApp::readData()
 	readConnectionscsv();
 	readTrainscsv();
 }
+
 Station* MetroApp::getStation(int id)
 {
 	return metro_coor.getStation(id);

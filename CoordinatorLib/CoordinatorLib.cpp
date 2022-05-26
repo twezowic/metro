@@ -8,11 +8,49 @@ void Coordinator::setStations(vector<Station> stations)
 		this->station_vec = stations;
 }
 
-void Coordinator::setTime(time starting_time) {
+void Coordinator::fillTimetable(std::vector<std::pair<Train, Train>>& train_pairs_vec)
+{
+	for (auto train_ite = train_pairs_vec.begin(); train_ite != train_pairs_vec.end(); ++train_ite)
+	{
+		Train& cur_train = (*train_ite).first;
+		//Station* cur_station = (*train_ite).first.getRoute()[0];
+		//int stat_num_in_vec = 0;
+		min_time temp_time = cur_time;
+		int loop_num = 0;
+		bool reached_midnight = false;
+		do
+		{
+
+			reached_midnight = assignTrainRoute(cur_train, temp_time);
+			if (loop_num % 2 == 0)
+				cur_train = (*train_ite).second;
+			else
+				cur_train = (*train_ite).first;
+			//cur_time += cur_station->getConnectionTime((*train_ite).getRoute()[stat_num_in_vec]);
+			// give timetable train and time it is on station
+			temp_time += 10;
+			++loop_num;
+		} while (!reached_midnight);
+	}
+
+}
+
+bool Coordinator::assignTrainRoute(Train& cur_train, min_time temp_time)
+{
+	bool reached_end_of_route = false;
+	do
+	{
+
+	} while (cur_time < 24 * 60 || !reached_end_of_route);
+
+	return false;
+}
+
+void Coordinator::setTime(min_time starting_time) {
 	cur_time = starting_time;
 }
 
-void Coordinator::increaseTime(time& simulation_time)
+void Coordinator::increaseTime(min_time& simulation_time)
 { // as of right now, this means - increasing the time by one minute
 	++cur_time;
 	++simulation_time;
@@ -25,7 +63,7 @@ void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of 
 	for (auto stat_ite = station_vec.begin(); stat_ite != station_vec.end(); ++stat_ite)
 	{
 		std::vector<Train*> trains_on_station;
-		if ((*stat_ite).hasTrains(1))
+		if ((*stat_ite).hasTrains(cur_time))
 			trains_on_station = (*stat_ite).getNextTrains(cur_time);
 		else
 			trains_on_station = {};
@@ -53,7 +91,7 @@ void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of 
 			{
 				if (isTheTrainOnStation(train_to_append_pair.first, trains_on_station) && train_to_append_pair.first->hasFreeSpace())
 				{
-					train_to_append_pair.first->AddPerson(**waiting_person_ite);
+					train_to_append_pair.first->AddPerson(*waiting_person_ite);
 					(*waiting_person_ite)->setNextStop(train_to_append_pair.second);
 				}
 				else
@@ -84,7 +122,7 @@ std::vector<Train*> Coordinator::findNextTrains(Station& station)
 	int i = 0;
 	do 
 	{
-		std::pair<std::vector<Train*>, time> train_time_pair = station.nexttrain(time_offset);
+		std::pair<std::vector<Train*>, min_time> train_time_pair = station.nexttrain(time_offset);
 		time_offset = train_time_pair.second + 1;
 		train_vec.insert(train_vec.end(), train_time_pair.first.begin(), train_time_pair.first.end());
 		i += train_time_pair.first.size();
