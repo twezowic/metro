@@ -125,11 +125,39 @@ void MetroApp::readData()
 	readTrainscsv();
 }
 
-
+string MetroApp::line(int x1, int y1, int x2, int y2)
+{
+	return "<line x1=\"" + to_string(x1) + "\" y1=\"" + to_string(y1) + "\" x2=\"" + to_string(x2) + "\" y2=\"" + to_string(y2) + "\" style=\"stroke:rgb(0, 0, 0);stroke-width:2\" />";
 }
+string MetroApp::dot(int x, int y)
+{
+	return "<circle cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"4\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
+}
+
 
 void MetroApp::create_svg()
 {
-
+	string result;
+	result += "<svg  version = \"1.1\" xmlns = \"http://www.w3.org/2000/svg\">\n";
+	//connections
+	for (int i = 0; i < connect_vec.size(); i++)
+	{
+		int x1, y1, x2, y2;
+		//x1 = connect_vec[i].getstation1id().getX();
+		//y1 = connect_vec[i].getstation1id().getY();
+		//x2 = connect_vec[i].getstation2id().getX();
+		//y2 = connect_vec[i].getstation2id().getY();
+		result += line(x1, y1, x2, y2) + '\n';
+	}
+	// stations
+	for (int i = 0; i < metro_coor.getStations().size(); i++)
+	{
+		int x, y;
+		//x = metro_coor.getStations()[i].getX();
+		//y = metro_coor.getStations()[i].getY();
+		result += dot(x, y) + '\n';
+	}
+	//trains
+	result += "</svg>";
 }
 

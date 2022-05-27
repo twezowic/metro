@@ -25,6 +25,7 @@ private:
 	std::pair<double, Station*> CompareRoutes(Station& start_stat, std::vector<Station*> person_route, std::vector<Station*> train_route); 
 public:
 	Coordinator();
+	std::vector<Station> getStations() { return station_vec; }
 	void setTime(min_time starting_time);
 	void increaseTime(min_time& simulation_time);
 	void HandleStations();
