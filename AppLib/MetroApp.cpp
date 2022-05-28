@@ -1,6 +1,7 @@
 #include "MetroApp.h"
 
 
+
 MetroApp::MetroApp() {}
 
 void MetroApp::setTrains(vector<std::pair<Train, Train>> trains_pairss)
@@ -55,6 +56,7 @@ void MetroApp::readStationscsv()
 		stations.push_back(Station(name, id, x, y));
 	}
 	metro_coor.setStations(stations);
+	file.close();
 }
 void MetroApp::readConnectionscsv()
 {
@@ -80,6 +82,7 @@ void MetroApp::readConnectionscsv()
 		connections.push_back(conection(station1, station2, distance));
 	}
 	setConnections(connections);
+	file.close();
 }
 void MetroApp::readTrainscsv()
 {
@@ -114,9 +117,9 @@ void MetroApp::readTrainscsv()
 
 
 		trains_pair.push_back(std::make_pair(train1, train1prim));
-
 	}
 	setTrains(trains_pair);
+	file.close();
 }
 void MetroApp::readData()
 {
@@ -125,14 +128,28 @@ void MetroApp::readData()
 	readTrainscsv();
 }
 
-string MetroApp::line(int x1, int y1, int x2, int y2)
+string MetroApp::drawConnection(int x1, int y1, int x2, int y2)
 {
 	return "<line x1=\"" + to_string(x1) + "\" y1=\"" + to_string(y1) + "\" x2=\"" + to_string(x2) + "\" y2=\"" + to_string(y2) + "\" style=\"stroke:rgb(0, 0, 0);stroke-width:2\" />";
 }
-string MetroApp::dot(int x, int y)
+string MetroApp::drawStation(int x, int y)
 {
 	return "<circle cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"4\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
 }
+
+string MetroApp::drawTrain(int lastStationx, int lastStationy, int nextStationx, int nextStationy, int distance, int actualDistance)
+{
+	int lineEquationX = (lastStationy - nextStationy) / (lastStationx - nextStationx);
+	int lineEquationY = lastStationy - ((lastStationy - nextStationy) / (lastStationx - nextStationx)) * lastStationx;
+	
+	int distancePercentage = actualDistance / distance;
+
+	int newX = abs(lastStationx - nextStationx) * distancePercentage + lastStationx;
+	int newY = lineEquationX * newX + lineEquationY;
+
+	return "<circle cx=\"" + to_string(newX) + "\" cy=\"" + to_string(newY) + "\" r=\"4\" stroke=\"black\" stroke-width=\"3\" fill=\"blue\" />";
+}
+
 
 
 void MetroApp::create_svg()
@@ -147,7 +164,7 @@ void MetroApp::create_svg()
 		//y1 = connect_vec[i].getstation1id().getY();
 		//x2 = connect_vec[i].getstation2id().getX();
 		//y2 = connect_vec[i].getstation2id().getY();
-		result += line(x1, y1, x2, y2) + '\n';
+		result += drawConnection(x1, y1, x2, y2) + '\n';
 	}
 	// stations
 	for (int i = 0; i < metro_coor.getStations().size(); i++)
@@ -155,9 +172,15 @@ void MetroApp::create_svg()
 		int x, y;
 		//x = metro_coor.getStations()[i].getX();
 		//y = metro_coor.getStations()[i].getY();
-		result += dot(x, y) + '\n';
+		result += drawStation(x, y) + '\n';
 	}
 	//trains
 	result += "</svg>";
+	fstream file("../station.svg", ios::out);
+	file << result;
+	file.close();
 }
 
+
+// TODO
+// get attributes from classes to use them in in write methods

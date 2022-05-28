@@ -2,6 +2,9 @@
 #include "../CoordinatorLib/CoordinatorLib.h"
 #include "../station/station.h"
 #include "../conections/conection.h"
+#include<fstream>
+#include<sstream>
+#include<cmath>
 
 class MetroApp
 {
@@ -23,8 +26,9 @@ public:
 	void readTrainscsv();
 	void readData();
 
-	string line(int x1, int y1, int x2, int y2);
-	string dot(int x, int y);
+	string drawConnection(int x1, int y1, int x2, int y2);
+	string drawStation(int x, int y);
+	string drawTrain(int lastStationx, int lastStationy, int nextStationx, int nextStationy, int distance, int actualDistance);
 	void create_svg();
 	void start();
 
