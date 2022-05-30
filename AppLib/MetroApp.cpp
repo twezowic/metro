@@ -1,4 +1,5 @@
 #include "MetroApp.h"
+#include<iostream>
 
 
 
@@ -137,22 +138,32 @@ string MetroApp::drawStation(int x, int y)
 	return "<circle cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"4\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
 }
 
-string MetroApp::drawTrain(int lastStationx, int lastStationy, int nextStationx, int nextStationy, int distance, int actualDistance)
+string MetroApp::drawTrain(int lastStationx, int lastStationy, int nextStationx, int nextStationy, double distance, double actualDistance)
 {
-	int lineEquationX = (lastStationy - nextStationy) / (lastStationx - nextStationx);
-	int lineEquationY = lastStationy - ((lastStationy - nextStationy) / (lastStationx - nextStationx)) * lastStationx;
-	
-	int distancePercentage = actualDistance / distance;
+	double distancePercentage = actualDistance / distance;
+	int newX, newY;
 
-	int newX = abs(lastStationx - nextStationx) * distancePercentage + lastStationx;
-	int newY = lineEquationX * newX + lineEquationY;
+	if (lastStationx - nextStationx != 0)
+	{
+		int lineEquationX = (lastStationy - nextStationy) / (lastStationx - nextStationx);
+		int lineEquationY = lastStationy - ((lastStationy - nextStationy) / (lastStationx - nextStationx)) * lastStationx;
+
+		newX = abs(lastStationx - nextStationx) * distancePercentage + lastStationx;
+		newY = lineEquationX * newX + lineEquationY;
+	}
+	else
+	{
+		newX = lastStationx;
+		newY = abs(lastStationy - nextStationy) * distancePercentage + lastStationy;
+
+	}
 
 	return "<circle cx=\"" + to_string(newX) + "\" cy=\"" + to_string(newY) + "\" r=\"4\" stroke=\"black\" stroke-width=\"3\" fill=\"blue\" />";
 }
 
 
 
-void MetroApp::create_svg()
+void MetroApp::create_map()
 {
 	string result;
 	result += "<svg  version = \"1.1\" xmlns = \"http://www.w3.org/2000/svg\">\n";
@@ -174,13 +185,35 @@ void MetroApp::create_svg()
 		//y = metro_coor.getStations()[i].getY();
 		result += drawStation(x, y) + '\n';
 	}
-	//trains
 	result += "</svg>";
 	fstream file("../station.svg", ios::out);
 	file << result;
 	file.close();
 }
 
+
+void MetroApp::add_trains()
+{
+	string result;
+	for (int i = 0; i < trains_pairs.size(); i++)
+	{
+		int lastStationx, lastStationy, nextStationx, nextStationy;
+		double distance, actualDistance;
+		//result += drawTrain(lastStationx, lastStationy, nextStationx, nextStationy, distance, actualDistance) + '\n';
+	}
+
+	stringstream text;
+	ifstream in_file("../sample.svg");
+
+	text << in_file.rdbuf();
+	string str = text.str();
+	int position = str.find("</svg>");
+	str.replace(position, 6, result);
+	in_file.close();
+
+	ofstream out_file("../sample.svg");
+	out_file << str << endl << "</svg>";
+}
 
 // TODO
 // get attributes from classes to use them in in write methods
