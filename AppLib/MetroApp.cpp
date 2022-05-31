@@ -131,11 +131,12 @@ void MetroApp::readData()
 
 string MetroApp::drawConnection(int x1, int y1, int x2, int y2)
 {
+	x1, x2, y1, y2 *= 10;
 	return "<line x1=\"" + to_string(x1) + "\" y1=\"" + to_string(y1) + "\" x2=\"" + to_string(x2) + "\" y2=\"" + to_string(y2) + "\" style=\"stroke:rgb(0, 0, 0);stroke-width:2\" />";
 }
 string MetroApp::drawStation(int x, int y)
 {
-	return "<circle cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"4\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
+	return "<circle cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"6\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
 }
 
 string MetroApp::drawTrain(int lastStationx, int lastStationy, int nextStationx, int nextStationy, double distance, double actualDistance)
@@ -171,19 +172,26 @@ void MetroApp::create_map()
 	for (int i = 0; i < connect_vec.size(); i++)
 	{
 		int x1, y1, x2, y2;
-		//x1 = connect_vec[i].getstation1id().getX();
-		//y1 = connect_vec[i].getstation1id().getY();
-		//x2 = connect_vec[i].getstation2id().getX();
-		//y2 = connect_vec[i].getstation2id().getY();
+		x1 = getStation(connect_vec[i].getstation1id())->x;
+		y1 = getStation(connect_vec[i].getstation1id())->y;
+		x2 = getStation(connect_vec[i].getstation2id())->x;
+		y2 = getStation(connect_vec[i].getstation2id())->y;
 		result += drawConnection(x1, y1, x2, y2) + '\n';
 	}
 	// stations
 	for (int i = 0; i < metro_coor.getStations().size(); i++)
 	{
 		int x, y;
-		//x = metro_coor.getStations()[i].getX();
-		//y = metro_coor.getStations()[i].getY();
+		x = metro_coor.getStations()[i].x;
+		y = metro_coor.getStations()[i].y;
 		result += drawStation(x, y) + '\n';
+	}
+	// trains
+	for (int i = 0; i < trains_pairs.size(); i++)
+	{
+		int lastStationx=1, lastStationy=1, nextStationx=1, nextStationy=1;
+		double distance=1, actualDistance=1;
+		result += drawTrain(lastStationx, lastStationy, nextStationx, nextStationy, distance, actualDistance) + '\n';
 	}
 	result += "</svg>";
 	fstream file("../station.svg", ios::out);
@@ -191,29 +199,7 @@ void MetroApp::create_map()
 	file.close();
 }
 
-
-void MetroApp::add_trains()
+Station* MetroApp::getStation(int id)
 {
-	string result;
-	for (int i = 0; i < trains_pairs.size(); i++)
-	{
-		int lastStationx, lastStationy, nextStationx, nextStationy;
-		double distance, actualDistance;
-		//result += drawTrain(lastStationx, lastStationy, nextStationx, nextStationy, distance, actualDistance) + '\n';
-	}
-
-	stringstream text;
-	ifstream in_file("../sample.svg");
-
-	text << in_file.rdbuf();
-	string str = text.str();
-	int position = str.find("</svg>");
-	str.replace(position, 6, result);
-	in_file.close();
-
-	ofstream out_file("../sample.svg");
-	out_file << str << endl << "</svg>";
+	return metro_coor.getStation(id);
 }
-
-// TODO
-// get attributes from classes to use them in in write methods
