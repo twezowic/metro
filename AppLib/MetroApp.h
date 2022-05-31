@@ -17,6 +17,9 @@ public:
 	min_time simulation_time;
 
 	MetroApp();
+	Coordinator getCoordinator() { return metro_coor; }
+	std::vector<std::pair<Train, Train>> getTrains() { return trains_pairs; }
+	std::vector<conection> getConnections() { return connect_vec; }
 	void setTrains(vector<std::pair<Train, Train>> trains);
 	void setConnections(vector<conection> connections);
 	bool hasPeople();
@@ -30,7 +33,6 @@ public:
 	string drawStation(int x, int y);
 	string drawTrain(int lastStationx, int lastStationy, int nextStationx, int nextStationy, double distance, double actualDistance);
 	void create_map();
-	void add_trains();
 	void start();
 
 	Station* getStation(int id);
