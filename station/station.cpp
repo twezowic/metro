@@ -5,6 +5,18 @@ using namespace std;
 #include <queue>
 #include <vector>
 #include <string>
+min_time Station::getConnectionTime(Station* next_station)
+{
+    for (int i = 0; i < out_conection_vec.size(); i++)
+    {
+        if (out_conection_vec[i]->distance(next_station->getid()) != -1)
+        {
+            return out_conection_vec[i]->distance(next_station->getid());
+        }
+
+    }
+    return -1;
+}//@TODO
 Station::Station(string name1, int id1, int x1, int y1) :point(x1, y1, id1)
 {
     name = name1;

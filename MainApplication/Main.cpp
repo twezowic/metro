@@ -8,6 +8,7 @@
 
 int main()
 {
+	min_time t = 60 * 12;
 
 	// read stations, trains, connections from first file
 	// read people from second file

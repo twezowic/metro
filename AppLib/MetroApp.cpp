@@ -22,6 +22,8 @@ bool MetroApp::hasPeople()
 void MetroApp::start()
 {
 	readData();
+	metro_coor.setTime(simulation_time);
+	metro_coor.fillTimetable(trains_pairs);
 }
 
 min_time MetroApp::run()

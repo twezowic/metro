@@ -30,13 +30,13 @@ public:
 	void increaseTime(min_time& simulation_time);
 	void HandleStations();
 	bool isTheTrainOnStation(Train* the_train, std::vector<Train*> trains_on_stat);
-
+	std::vector<Station> getStations() { return station_vec; };
 	// methods used while starting the application
 	void addStation(Station new_stat);
 	Station* getStation(int id);
 	void setStations(vector<Station> stations);
 	void fillTimetable(std::vector<std::pair<Train, Train>>& train_pairs_vec); //@TODO
-	bool assignTrainRoute(Train& cur_train, min_time temp_time);
+	bool assignTrainRoute(Train& cur_train, min_time& temp_time);
 
 	// methods below might be useful to refactorise the code
 	void AddPersonToTrain(Person& person, Train& train);
