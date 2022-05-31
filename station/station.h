@@ -24,7 +24,7 @@ public:
     void remove_conection(one_wayconection id);
     void add_timetable(train& trainname, min_time time1);
     pair<std::vector<train*>, min_time> nexttrain(min_time time1);
-    min_time getConnectionTime(Station* next_station);
+    min_time getConnectionTime(Station* next_station); //@TODO
     vector <one_wayconection*> vec()
     {
         return out_conection_vec;

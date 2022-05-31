@@ -13,8 +13,6 @@ void Coordinator::fillTimetable(std::vector<std::pair<Train, Train>>& train_pair
 	for (auto train_ite = train_pairs_vec.begin(); train_ite != train_pairs_vec.end(); ++train_ite)
 	{
 		Train& cur_train = (*train_ite).first;
-		//Station* cur_station = (*train_ite).first.getRoute()[0];
-		//int stat_num_in_vec = 0;
 		min_time temp_time = cur_time;
 		int loop_num = 0;
 		bool reached_midnight = false;
@@ -26,8 +24,6 @@ void Coordinator::fillTimetable(std::vector<std::pair<Train, Train>>& train_pair
 				cur_train = (*train_ite).second;
 			else
 				cur_train = (*train_ite).first;
-			//cur_time += cur_station->getConnectionTime((*train_ite).getRoute()[stat_num_in_vec]);
-			// give timetable train and time it is on station
 			temp_time += 10;
 			++loop_num;
 		} while (!reached_midnight);
@@ -35,14 +31,26 @@ void Coordinator::fillTimetable(std::vector<std::pair<Train, Train>>& train_pair
 
 }
 
-bool Coordinator::assignTrainRoute(Train& cur_train, min_time temp_time)
+bool Coordinator::assignTrainRoute(Train& cur_train, min_time& temp_time)
 {
+	Station* cur_station = cur_train.getRoute()[0];
 	bool reached_end_of_route = false;
-	do
+	int i = 0;
+	while(!reached_end_of_route)
 	{
 
-	} while (cur_time < 24 * 60 || !reached_end_of_route);
+		Station* cur_station = cur_train.getRoute()[i];
+		Station* next_station = cur_train.getRoute()[i+1];
 
+		temp_time += cur_station->getConnectionTime(next_station);
+		if (temp_time > 24 * 60)
+			return true;
+		cur_station->add_timetable(cur_train, temp_time);
+		
+		if (next_station == cur_train.getRoute()[-i])
+			reached_end_of_route = true;
+		++i;
+		} 
 	return false;
 }
 

@@ -20,7 +20,7 @@ void  timetable::add_timetable(train& trainname, min_time time1)
         my_timetable.push(d);
     }
 
-    while (!(my_timetable.back().second <= time1 and my_timetable.front().second>=time1))
+    while (!(my_timetable.back().second <= time1 && my_timetable.front().second>=time1))
     {
 
         pair<train*, min_time> element = my_timetable.front();

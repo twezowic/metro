@@ -14,8 +14,8 @@ private:
 	std::vector<conection> connect_vec; // same as with trains
 
 public:
-	min_time simulation_time;
-
+	min_time simulation_time = 720; //@TODO change time declaration
+	
 	MetroApp();
 	Coordinator getCoordinator() { return metro_coor; }
 	std::vector<std::pair<Train, Train>> getTrains() { return trains_pairs; }
