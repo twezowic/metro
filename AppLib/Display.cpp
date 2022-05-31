@@ -7,11 +7,11 @@ string Display::drawConnection(int x1, int y1, int x2, int y2)
 	y2 *= size;
 	return "<line x1=\"" + to_string(x1) + "\" y1=\"" + to_string(y1) + "\" x2=\"" + to_string(x2) + "\" y2=\"" + to_string(y2) + "\" style=\"stroke:rgb(0, 0, 0);stroke-width:2\" />";
 }
-string Display::drawStation(int x, int y)
+string Display::drawStation(int x, int y, int index)
 {
 	x *= size;
 	y *= size;
-	return "<circle cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"6\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
+	return "<circle onmouseover=onMouseOverHosting(\"station" + to_string(index) + "\") onmouseout=onMouseOutHosting() cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"6\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
 }
 
 string Display::drawTrain(int lastStationx, int lastStationy, int nextStationx, int nextStationy, double distance, double actualDistance)
@@ -36,13 +36,35 @@ string Display::drawTrain(int lastStationx, int lastStationy, int nextStationx, 
 
 	return "<circle cx=\"" + to_string(newX) + "\" cy=\"" + to_string(newY) + "\" r=\"4\" stroke=\"black\" stroke-width=\"3\" fill=\"blue\" />";
 }
+string Display::addScripts()
+{
+	return R""""(<div id="mycontent" style="position:absolute; left:1000px; top:10px"></div>
+<script>
+function onMouseOverHosting(text) {
+  var html = document.getElementById(text).innerHTML;
+  document.getElementById("mycontent").innerHTML = html;
+}
+function onMouseOutHosting() {
+  var html = "";
+  document.getElementById("mycontent").innerHTML = html;
+}
+</script>)"""";
+}
 
+string Display::addStationInfo(int index, string name)
+{
+	string result;
+	result += "<div id=\"station" + to_string(index) + "\" style=\"display:none\">\n";
+	result += "<strong>Station name:" + name + "</strong>\n";
+	result += "</div>\n";
+	return result;
+}
 
 
 void Display::create_map(MetroApp metroapp)
 {
-	string result;
-	result += "<svg  version = \"1.1\" xmlns = \"http://www.w3.org/2000/svg\">\n";
+	string result, stationInfos;
+	result += "<svg  version = \"1.1\" xmlns = \"http://www.w3.org/2000/svg\" width=\"1000\" height=\"1000\">\n";
 	//connections
 	for (int i = 0; i < metroapp.getConnections().size(); i++)
 	{
@@ -59,7 +81,8 @@ void Display::create_map(MetroApp metroapp)
 		int x, y;
 		x = metroapp.getCoordinator().getStations()[i].x;
 		y = metroapp.getCoordinator().getStations()[i].y;
-		result += drawStation(x, y) + '\n';
+		result += drawStation(x, y, i) + '\n';
+		stationInfos += addStationInfo(i, metroapp.getCoordinator().getStations()[i].getName());
 	}
 	// trains
 	for (int i = 0; i < metroapp.getTrains().size(); i++)
@@ -68,10 +91,9 @@ void Display::create_map(MetroApp metroapp)
 		double distance = 1, actualDistance = 1;
 		result += drawTrain(lastStationx, lastStationy, nextStationx, nextStationy, distance, actualDistance) + '\n';
 	}
-	result += "</svg>";
-	fstream file("../station.svg", ios::out);
+	result += "</svg>\n";
+	result += stationInfos + addScripts();
+	fstream file("../station.html", ios::out);
 	file << result;
 	file.close();
 }
-
-// move getStation by id to connections.

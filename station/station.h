@@ -19,6 +19,7 @@ protected:
 public:
     Station(string name1, int id1, int x1 = 0, int x2 = 0);
     string toString();
+    string getName() { return name; }
     void add_conection(one_wayconection& id);
     void remove_conection(one_wayconection id);
     void add_timetable(train& trainname, min_time time1);

@@ -1,0 +1,64 @@
+<svg  version = "1.1" xmlns = "http://www.w3.org/2000/svg" width="1000" height="1000">
+<line x1="80" y1="60" x2="100" y2="140" style="stroke:rgb(0, 0, 0);stroke-width:2" />
+<line x1="100" y1="140" x2="180" y2="140" style="stroke:rgb(0, 0, 0);stroke-width:2" />
+<line x1="180" y1="140" x2="200" y2="220" style="stroke:rgb(0, 0, 0);stroke-width:2" />
+<line x1="200" y1="220" x2="240" y2="280" style="stroke:rgb(0, 0, 0);stroke-width:2" />
+<line x1="240" y1="280" x2="360" y2="280" style="stroke:rgb(0, 0, 0);stroke-width:2" />
+<line x1="180" y1="140" x2="260" y2="140" style="stroke:rgb(0, 0, 0);stroke-width:2" />
+<line x1="260" y1="140" x2="360" y2="140" style="stroke:rgb(0, 0, 0);stroke-width:2" />
+<line x1="360" y1="140" x2="360" y2="80" style="stroke:rgb(0, 0, 0);stroke-width:2" />
+<line x1="360" y1="80" x2="300" y2="40" style="stroke:rgb(0, 0, 0);stroke-width:2" />
+<circle onmouseover=onMouseOverHosting("station0") onmouseout=onMouseOutHosting() cx="80" cy="60" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=onMouseOverHosting("station1") onmouseout=onMouseOutHosting() cx="100" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=onMouseOverHosting("station2") onmouseout=onMouseOutHosting() cx="180" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=onMouseOverHosting("station3") onmouseout=onMouseOutHosting() cx="200" cy="220" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=onMouseOverHosting("station4") onmouseout=onMouseOutHosting() cx="240" cy="280" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=onMouseOverHosting("station5") onmouseout=onMouseOutHosting() cx="360" cy="280" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=onMouseOverHosting("station6") onmouseout=onMouseOutHosting() cx="260" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=onMouseOverHosting("station7") onmouseout=onMouseOutHosting() cx="360" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=onMouseOverHosting("station8") onmouseout=onMouseOutHosting() cx="360" cy="80" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=onMouseOverHosting("station9") onmouseout=onMouseOutHosting() cx="300" cy="40" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle cx="1" cy="1" r="4" stroke="black" stroke-width="3" fill="blue" />
+<circle cx="1" cy="1" r="4" stroke="black" stroke-width="3" fill="blue" />
+</svg>
+<div id="station0" style="display:none">
+<strong>Station name:A</strong>
+</div>
+<div id="station1" style="display:none">
+<strong>Station name:B</strong>
+</div>
+<div id="station2" style="display:none">
+<strong>Station name:C</strong>
+</div>
+<div id="station3" style="display:none">
+<strong>Station name:D</strong>
+</div>
+<div id="station4" style="display:none">
+<strong>Station name:E</strong>
+</div>
+<div id="station5" style="display:none">
+<strong>Station name:F</strong>
+</div>
+<div id="station6" style="display:none">
+<strong>Station name:G</strong>
+</div>
+<div id="station7" style="display:none">
+<strong>Station name:H</strong>
+</div>
+<div id="station8" style="display:none">
+<strong>Station name:I</strong>
+</div>
+<div id="station9" style="display:none">
+<strong>Station name:J</strong>
+</div>
+<div id="mycontent" style="position:absolute; left:1000px; top:10px"></div>
+<script>
+function onMouseOverHosting(text) {
+  var html = document.getElementById(text).innerHTML;
+  document.getElementById("mycontent").innerHTML = html;
+}
+function onMouseOutHosting() {
+  var html = "";
+  document.getElementById("mycontent").innerHTML = html;
+}
+</script>
