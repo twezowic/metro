@@ -9,7 +9,7 @@ void MetroApp::setTrains(vector<std::pair<Train, Train>> trains_pairss)
 {
 	this->trains_pairs = trains_pairss;
 }
-void MetroApp::setConnections(vector<conection> connections)
+void MetroApp::setConnections(vector<conection>& connections)
 {
 	this->connect_vec = connections;
 }
@@ -63,7 +63,7 @@ void MetroApp::readStationscsv()
 }
 void MetroApp::readConnectionscsv()
 {
-	vector<conection> connections;
+	//vector<conection> connections;
 	vector<string> row;
 	string line, word;
 
@@ -82,9 +82,11 @@ void MetroApp::readConnectionscsv()
 		Station* station1 = getStation(stoi(row[0]));
 		Station* station2 = getStation(stoi(row[1]));
 		int distance = stoi(row[2]);
-		connections.push_back(conection(station1, station2, distance));
+		auto cur_connection = conection(station1, station2, distance);
+		connect_vec.push_back(cur_connection);
+		station1->add_conection(connect_vec.back());
 	}
-	setConnections(connections);
+	//setConnections(connections);
 	file.close();
 }
 void MetroApp::readTrainscsv()

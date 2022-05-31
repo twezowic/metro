@@ -10,6 +10,7 @@ int main()
 {
 	min_time t = 60 * 12;
 
+
 	// read stations, trains, connections from first file
 	// read people from second file
 	auto metro = MetroApp();
@@ -18,6 +19,5 @@ int main()
 	display.create_map(metro);
 	//int sim_time = metro.run();
 	//std::cout << sim_time;
-
 	return 0;
 }
