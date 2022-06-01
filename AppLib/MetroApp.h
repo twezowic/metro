@@ -26,7 +26,7 @@ public:
 	void setTrains(vector<std::pair<Train, Train>> trains);
 	void setConnections();
 	bool hasPeople();
-	min_time run(Display display);
+	min_time run();
 	void readStationscsv();
 	void readConnectionscsv();
 	void readTrainscsv();

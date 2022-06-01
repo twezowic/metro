@@ -46,13 +46,52 @@ void MetroApp::start(int people_number, min_time start_time)
 	generatePeople(people_number);
 }
 
-min_time MetroApp::run(Display display)
+min_time MetroApp::run()
 {
-	while (!hasPeople())
+	int input=1;
+	auto display = Display();
+	auto display_text = Display_text();
+	while (input!=0)
 	{
-		display.create_map(*this);
-		metro_coor.HandleStations();
-		metro_coor.increaseTime(simulation_time);
+		cout << display.showMenu();
+		cin >> input;
+		cout << endl;
+		switch (input)
+		{
+		case (1):
+		{
+			cout<<display_text.showStations(*this);
+			break;
+		}
+		case (2):
+		{
+			cout<<display_text.showTrains(*this);
+			break;
+		}
+		case (3):
+		{
+			display_text.create_map(*this);
+			break;
+		}
+		case (4):
+		{
+			display.create_map(*this);
+			break;
+		}
+		case (5):
+		{
+			cout << "Simulation time: " << metro_coor.getTime() << endl;
+			break;
+		}
+		case (6):
+		{
+			metro_coor.HandleStations();
+			metro_coor.increaseTime(simulation_time);
+			break;
+		}
+		default:
+			break;
+		}
 	}
 	return simulation_time;
 }

@@ -57,7 +57,7 @@ string Display::addTrainInfo(int index, string name, int maxCapacity, int people
 void Display::create_map(MetroApp metroapp)
 {
 	string result, informations;
-	result += "<svg  version = \"1.1\" xmlns = \"http://www.w3.org/2000/svg\" width=\"1000\" height=\"1000\">\n";
+	result += "<svg  version = \"1.1\" xmlns = \"http://www.w3.org/2000/svg\" width=\""+ to_string(width)+ "\" height=\"" +to_string(height) + "\">\n";
 	//connections
 	for (int i = 0; i < metroapp.getConnections().size(); i++)
 	{

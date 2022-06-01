@@ -1,6 +1,7 @@
 #include "../AppLib/MetroApp.h"
 #include "../CoordinatorLib/CoordinatorLib.h"
 #include "../AppLib/Display.h"
+#include "../AppLib/Display_text.h"
 
 #include <vector>
 #include <iostream>
@@ -15,9 +16,11 @@ int main()
 	// read stations, trains, connections from first file
 	// read people from second file
 	auto metro = MetroApp();
-	auto display = Display();
+	//auto display = Display();
+	//auto display_text = Display_text();
 	metro.start(people_number, t);
+	//cout << display_text.showTrains(metro);
 	//display.create_map(metro);
-	metro.run(display);
+	metro.run();
 	return 0;
 }
