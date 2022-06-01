@@ -16,8 +16,8 @@ int main()
 	auto metro = MetroApp();
 	auto display = Display();
 	metro.start();
-	display.create_map(metro);
-	//int sim_time = metro.run();
+	//display.create_map(metro);
+	metro.run(display);
 	//std::cout << sim_time;
 	return 0;
 }

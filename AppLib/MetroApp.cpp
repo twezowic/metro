@@ -1,4 +1,5 @@
 #include "MetroApp.h"
+#include "Display.h"
 #include<iostream>
 
 
@@ -42,13 +43,15 @@ void MetroApp::start()
 	readData();
 	metro_coor.setTime(simulation_time);
 	metro_coor.fillTimetable(trains_pairs);
+	metro_coor.setTime(721);
 	generatePeople(people_number);
 }
 
-min_time MetroApp::run()
+min_time MetroApp::run(Display display)
 {
-	while (hasPeople());
+	while (!hasPeople())
 	{
+		display.create_map(*this);
 		metro_coor.HandleStations();
 		metro_coor.increaseTime(simulation_time);
 	}

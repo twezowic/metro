@@ -26,14 +26,18 @@ double train::getx(int time)
     int simultime = time;
     while (!end)
     {
-        vector<train*> trains = nextstop->getNextTrains(simultime);
-        simultime = nextstop->nexttrain(simultime).second + 1;
+       
+
+    std:pair<vector<train*>,int>  para = nextstop->nexttrain(simultime);
+        simultime = para.second + 1;
+        vector<train*> trains = para.first;
         for (int i = 0; i < trains.size(); i++)
         {
 
             if (trains[i]->toString() == this->toString())
             {
                 end = true;
+                break;
             }
         }
     }
@@ -47,6 +51,10 @@ double train::getx(int time)
             i--;
             break;
         }
+    }
+    if (i == -1)
+    {
+        return this->getRoute()[0]->x;
     }
     int conectiontime = this->getRoute()[i]->getConnectionTime(nextstop);
     int starttime = simultime - conectiontime;
@@ -64,8 +72,9 @@ double train::gety(int time)
     int simultime = time;
     while (!end)
     {
-        vector<train*> trains = nextstop->getNextTrains(simultime);
-        simultime = nextstop->nexttrain(simultime).second + 1;
+    std:pair<vector<train*>, int>  para = nextstop->nexttrain(simultime);
+        simultime = para.second + 1;
+        vector<train*> trains = para.first;
         for (int i = 0; i < trains.size(); i++)
         {
 
@@ -85,6 +94,10 @@ double train::gety(int time)
             i--;
             break;
         }
+    }
+    if (i == -1)
+    {
+        return this->getRoute()[0]->y;
     }
     int conectiontime = this->getRoute()[i]->getConnectionTime(nextstop);
     int starttime = simultime - conectiontime;

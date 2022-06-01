@@ -53,7 +53,7 @@ pair<vector<train*>, min_time>  timetable::nextTrain(min_time time1)
         my_timetable.push(d);
     }
 
-    while (!(my_timetable.back().second < time1 and my_timetable.front().second>time1))
+    while (!(my_timetable.back().second < time1 && my_timetable.front().second>=time1))
     {
 
         pair<train*, min_time> element = my_timetable.front();
@@ -71,10 +71,13 @@ pair<vector<train*>, min_time>  timetable::nextTrain(min_time time1)
     }
     vector<train*> answer = {};
     answer.push_back(my_timetable.front().first);
-    while (!(my_timetable.back().second > time1))
+    pair<train*, min_time> element = my_timetable.front();
+    my_timetable.pop();
+    my_timetable.push(element);
+    while ((my_timetable.back().second ==my_timetable.front().second))
     {
-
-        pair<train*, min_time> element = my_timetable.front();
+ answer.push_back(my_timetable.front().first);
+        element = my_timetable.front();
         my_timetable.pop();
         my_timetable.push(element);
         if (my_timetable.front().second == 00)
@@ -85,8 +88,8 @@ pair<vector<train*>, min_time>  timetable::nextTrain(min_time time1)
             my_timetable.pop();
             my_timetable.push(d);
         }
-        answer.push_back(my_timetable.front().first);
+       
     }
 
-    return pair<vector<train*>, min_time>(answer, my_timetable.front().second);
+    return pair<vector<train*>, min_time>(answer, my_timetable.back().second);
 }

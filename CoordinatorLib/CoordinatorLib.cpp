@@ -92,7 +92,8 @@ void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of 
 		{
 			(*train_ite)->newstop();
 			std::vector<Person*> new_person_in_train_vec;
-			for (auto person_ite = (*train_ite)->getPeopleVec().begin(); person_ite != (*train_ite)->getPeopleVec().end(); ++person_ite)
+
+    		for (auto person_ite = (*train_ite)->getPeopleVec().begin(); person_ite != (*train_ite)->getPeopleVec().end(); ++person_ite)
 			{
 				if ((*person_ite)->getNextStop() == &(*stat_ite))
 				{

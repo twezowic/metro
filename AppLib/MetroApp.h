@@ -7,6 +7,7 @@
 #include<cmath>
 #include <random>
 
+class Display;
 class MetroApp
 {
 private:
@@ -25,7 +26,7 @@ public:
 	void setTrains(vector<std::pair<Train, Train>> trains);
 	void setConnections();
 	bool hasPeople();
-	min_time run();
+	min_time run(Display display);
 	void readStationscsv();
 	void readConnectionscsv();
 	void readTrainscsv();
