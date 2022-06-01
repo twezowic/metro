@@ -38,6 +38,11 @@ public:
 	void fillTimetable(std::vector<std::pair<Train, Train>>& train_pairs_vec); //@TODO
 	bool assignTrainRoute(Train* cur_train, min_time& temp_time);
 
+
+	int getpozition(int id);
+	vector<Station*> dijkstra(int start, int second);
+
+
 	// methods below might be useful to refactorise the code
 	void AddPersonToTrain(Person& person, Train& train);
 	void HandleTrainOnStation(std::vector<Person*> waiting_people, Train& Train, Station& station); // appends waiting people list, removes people from train
