@@ -25,8 +25,7 @@ void Display_text::create_map(MetroApp metroapp)
 		}
 		table.push_back(row);
 	}
-	char stationChar = 'A';
-	stationChar++;
+	char stationChar = 'S';
 	for (int i = 0; i < metroapp.getConnections().size(); i++)
 	{
 		int startX = metroapp.getStation(metroapp.getConnections()[i].getstation1id())->x;
@@ -55,7 +54,6 @@ void Display_text::create_map(MetroApp metroapp)
 			table[startX][startY] = '.';
 		}
 		table[nextX][nextY] = stationChar;
-		stationChar++;
 	}
 	for (int i = 0; i < width + 2; i++)
 	{
