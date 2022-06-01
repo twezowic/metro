@@ -9,6 +9,7 @@ class Person
   Station* next_stop;
   vector <Station*>myroute;
 public:
+    Person(vector<Station*> route);
     Person(Station* next_stop);
     void setroute(vector <Station*>route1);
     Station* getNextStop() { return next_stop; };

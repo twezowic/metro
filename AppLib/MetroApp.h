@@ -16,7 +16,7 @@ private:
 	std::vector<conection> connect_vec; // same as with trains
 	std::vector<Person> person_vec;
 public:
-	min_time simulation_time = 720; //@TODO change time declaration
+	min_time simulation_time; //@TODO change time declaration
 	
 	MetroApp();
 	Coordinator getCoordinator() { return metro_coor; }
@@ -33,7 +33,7 @@ public:
 	void readData();
 	void generatePeople(int people_number);
 
-	void start();
+	void start(int people_number, min_time start_time);
 
 	Station* getStation(int id);
 };

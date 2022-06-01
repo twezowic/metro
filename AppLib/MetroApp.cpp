@@ -4,7 +4,7 @@
 
 
 
-MetroApp::MetroApp() {}
+MetroApp::MetroApp() { simulation_time = 0; }
 
 Train MetroApp::getCurrentTrain(std::pair<Train, Train> trains_pairss)
 {
@@ -36,12 +36,11 @@ bool MetroApp::hasPeople()
 	return false;
 }
 
-void MetroApp::start()
+void MetroApp::start(int people_number, min_time start_time)
 {
 	srand(time(NULL));
-	int people_number = 100; // @TODO
 	readData();
-	metro_coor.setTime(simulation_time);
+	metro_coor.setTime(start_time);
 	metro_coor.fillTimetable(trains_pairs);
 	metro_coor.setTime(721);
 	generatePeople(people_number);
@@ -155,10 +154,12 @@ void MetroApp::readData()
 
 void MetroApp::generatePeople(int people_number)
 {
+
 	int start_stat = rand() % metro_coor.getStations().size();
 	int end_stat = rand() % metro_coor.getStations().size();
-	
-	//person_vec.push_back(Person())
+	int start_stat_id = metro_coor.getStations()[start_stat].getid();
+	int end_stat_id = metro_coor.getStations()[end_stat].getid();
+	person_vec.push_back(Person(metro_coor.dijkstra(start_stat_id, end_stat_id)));
 
 }
 
@@ -166,3 +167,4 @@ Station* MetroApp::getStation(int id)
 {
 	return metro_coor.getStation(id);
 }
+

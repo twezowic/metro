@@ -218,3 +218,71 @@ Station* Coordinator::getStation(int id)
 
 	}
 }
+
+
+int Coordinator::getpozition(int id)
+{
+	for (int i = 0; i < station_vec.size(); i++)
+	{
+		if (station_vec[i].getid() == id)
+		{
+			return i;
+		}
+
+	}
+	return -1;
+}
+
+
+vector<Station*> Coordinator::dijkstra(int start, int second)
+{
+	vector<pair<int, int>> distan;
+	while (distan.size() > 0)
+	{
+		distan.pop_back();
+	}
+	for (int i = 0; i < station_vec.size(); i++)
+	{
+		if (station_vec[i].getid() != start)
+		{
+			distan.push_back(pair<int, int>(station_vec[i].getid(), 999999));
+		}
+		else
+		{
+			distan.push_back(pair<int, int>(station_vec[i].getid(), 0));
+		}
+	}
+	priority_queue<pair<int, int>> tovisit;
+	tovisit.push(pair<int, int>(-0, start));
+	while (tovisit.size() != 0)
+	{
+		pair<int, int> present = tovisit.top();
+		int presentpozition = getpozition(present.second);
+		for (int i = 0; i < station_vec[presentpozition].vec().size(); i++)
+		{
+			int koszt = (station_vec[presentpozition].vec()[i])->distance(present.second);
+
+			int disttous = distan[presentpozition].second;
+			int distancetosec = distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].second;
+			if (disttous + koszt < distancetosec)
+			{   //(stations[presentpozition]->vec()[i])->distance(presentpozition)odleg�os� obecnegopo�
+				distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].second = (station_vec[presentpozition].vec()[i])->distance(present.second) + distan[presentpozition].second;
+				distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].first = presentpozition;
+
+				tovisit.push(pair<int, int>(-distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].second, station_vec[presentpozition].vec()[i]->getstation2id()));
+			}
+		}
+		tovisit.pop();
+	}
+	vector<Station*> trasa;
+	int poz = getpozition(second);
+	while (poz != getpozition(start))
+	{
+		trasa.push_back(&station_vec[poz]);
+		poz = distan[poz].first;
+	}
+
+	trasa.push_back(&station_vec[poz]);
+	return trasa;//vector stacji
+
+}

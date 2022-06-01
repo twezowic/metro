@@ -9,6 +9,7 @@
 int main()
 {
 	min_time t = 60 * 12;
+	int people_number = 100;
 
 
 	// read stations, trains, connections from first file
@@ -18,6 +19,11 @@ int main()
 	metro.start();
 	//display.create_map(metro);
 	metro.run(display);
+	metro.start(people_number, t);
+	//display.create_map(metro);
+	std::vector<int> a;
+
+	int sim_time = metro.run();
 	//std::cout << sim_time;
 	return 0;
 }
