@@ -1,3 +1,5 @@
+#pragma once
+
 #include <vector>
 #include <string>
 #include "../person/people.h"
@@ -9,6 +11,7 @@ class train
     string name;
     vector <Person*> people;
     vector <Station*> routeid;
+    Station* nextstop;
 public:
     train(int id1,string name1,int maxcapity);
     void setroute(vector <Station*> route);
@@ -23,4 +26,7 @@ public:
     std::vector<Station*> getRoute() { return routeid; };
     void AddPerson(Person* new_per) { people.push_back(new_per); };
     bool hasFreeSpace() { return !isfull(); };
+    double getx(int time);
+    double gety(int time);
+    void newstop();
 };
