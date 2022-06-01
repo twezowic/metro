@@ -30,7 +30,6 @@ public:
 	void increaseTime(min_time& simulation_time);
 	void HandleStations();
 	bool isTheTrainOnStation(Train* the_train, std::vector<Train*> trains_on_stat);
-	std::vector<Station> getStations() { return station_vec; };
 	// methods used while starting the application
 	void addStation(Station new_stat);
 	Station* getStation(int id);
