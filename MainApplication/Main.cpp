@@ -16,14 +16,8 @@ int main()
 	// read people from second file
 	auto metro = MetroApp();
 	auto display = Display();
-	metro.start();
-	//display.create_map(metro);
-	metro.run(display);
 	metro.start(people_number, t);
 	//display.create_map(metro);
-	std::vector<int> a;
-
-	int sim_time = metro.run();
-	//std::cout << sim_time;
+	metro.run(display);
 	return 0;
 }
