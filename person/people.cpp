@@ -2,7 +2,7 @@
 
 Person::Person(vector<Station*> route): myroute(route)
 {
-    next_stop = route[1];
+    next_stop = nullptr;
 }
 
 Person::Person(Station* next_stopp): next_stop(next_stopp)

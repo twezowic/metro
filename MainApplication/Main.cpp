@@ -18,6 +18,7 @@ int main()
 	auto display = Display();
 	metro.start(people_number, t);
 	//display.create_map(metro);
-	metro.run(display);
+	min_time sim_time = metro.run(display);
+	std::cout << sim_time;
 	return 0;
 }

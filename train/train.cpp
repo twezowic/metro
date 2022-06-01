@@ -3,7 +3,7 @@
 #include"../station/station.h"
 train::train(int id1,string name1,int maxcapity1):id(id1),name(name1),maxcapity(maxcapity1)
 {
-
+    people = {};
 }
 void train::setroute(vector <Station*> route1)
 {

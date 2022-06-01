@@ -13,6 +13,7 @@ public:
     Person(Station* next_stop);
     void setroute(vector <Station*>route1);
     Station* getNextStop() { return next_stop; };
+    Station* getLastStop() { return myroute.back(); }
     vector<Station*> getRoute() { return myroute; };
     void setNextStop(Station* new_stat) { next_stop = new_stat; };
 };

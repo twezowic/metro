@@ -34,6 +34,7 @@ public:
     {
         return nexttrain(cur_time).first;
     }
+    void addWaitingPerson(Person* person_to_add) { waiting.push_back(person_to_add); }
     std::vector<Person*> getWaitingList()
     {
         return waiting;

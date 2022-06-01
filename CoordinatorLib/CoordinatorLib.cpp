@@ -77,7 +77,7 @@ void Coordinator::increaseTime(min_time& simulation_time)
 		cur_time = 0;
 }
 
-void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of his route
+void Coordinator::HandleStations(int& people_in_metro) //@TODO when a passeneger gets to the end of his route
 {
 	for (auto stat_ite = station_vec.begin(); stat_ite != station_vec.end(); ++stat_ite)
 	{
@@ -92,11 +92,16 @@ void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of 
 		{
 			(*train_ite)->newstop();
 			std::vector<Person*> new_person_in_train_vec;
-
-    		for (auto person_ite = (*train_ite)->getPeopleVec().begin(); person_ite != (*train_ite)->getPeopleVec().end(); ++person_ite)
+			std::vector<Person*> cur_people_in_train = (*train_ite)->getPeopleVec();
+    		for (auto person_ite = cur_people_in_train.begin(); person_ite != cur_people_in_train.end(); ++person_ite)
 			{
 				if ((*person_ite)->getNextStop() == &(*stat_ite))
 				{
+					if ((*person_ite)->getLastStop() == &(*stat_ite))
+					{
+						--people_in_metro;
+						// here the person should be destroyed, if it was dynamically generated
+					}
 					waiting_list.push_back((*person_ite));
 				}
 				else
@@ -118,8 +123,9 @@ void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of 
 				else
 					waiting_list_after_operations.push_back(*waiting_person_ite);
 			}
-			else 
-				(*waiting_person_ite); //remove person function should go here
+			else
+				--people_in_metro;
+				//(*waiting_person_ite); //remove person function should go here
 		}
 		(*stat_ite).setwaiting(waiting_list_after_operations);
 	}

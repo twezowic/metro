@@ -15,6 +15,8 @@ private:
 	std::vector<std::pair<Train, Train>> trains_pairs; // since coordinator doesn't have this, metro probably should to ensure they don't get deleted
 	std::vector<conection> connect_vec; // same as with trains
 	std::vector<Person> person_vec;
+	int people_in_metro;
+	void addPeopleToStations();
 public:
 	min_time simulation_time; //@TODO change time declaration
 	
