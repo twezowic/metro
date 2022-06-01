@@ -42,13 +42,17 @@ bool Coordinator::assignTrainRoute(Train& cur_train, min_time& temp_time)
 		Station* cur_station = cur_train.getRoute()[i];
 		Station* next_station = cur_train.getRoute()[i+1];
 
+		cur_station->add_timetable(cur_train, temp_time);
+
 		temp_time += cur_station->getConnectionTime(next_station);
 		if (temp_time > 24 * 60)
 			return true;
-		cur_station->add_timetable(cur_train, temp_time);
-		
-		if (next_station == cur_train.getRoute()[-i])
+
+		if (next_station == cur_train.getRoute().back())
+		{
+			next_station->add_timetable(cur_train, temp_time);
 			reached_end_of_route = true;
+		}
 		++i;
 		} 
 	return false;
@@ -79,6 +83,7 @@ void Coordinator::HandleStations() //@TODO when a passeneger gets to the end of 
 		std::vector<Person*> waiting_list = (*stat_ite).getWaitingList();
 		for (auto train_ite = trains_on_station.begin(); train_ite != trains_on_station.end(); ++train_ite)
 		{
+			(*train_ite)->newstop();
 			std::vector<Person*> new_person_in_train_vec;
 			for (auto person_ite = (*train_ite)->getPeopleVec().begin(); person_ite != (*train_ite)->getPeopleVec().end(); ++person_ite)
 			{

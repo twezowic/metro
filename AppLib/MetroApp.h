@@ -22,7 +22,7 @@ public:
 	std::vector<conection> getConnections() { return connect_vec; }
 	Train getCurrentTrain(std::pair<Train, Train>);
 	void setTrains(vector<std::pair<Train, Train>> trains);
-	void setConnections(vector<conection> connections);
+	void setConnections();
 	bool hasPeople();
 	min_time run();
 	void readStationscsv();

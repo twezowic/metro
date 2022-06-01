@@ -10,7 +10,7 @@ class one_wayconection
     Station* station2id;
 public:
     one_wayconection(Station* id1, Station* id2,  int distance);
-    int distance(int idstation);
+    virtual int distance(int idstation);
     
     std::string toString();
     virtual ~one_wayconection();
