@@ -5,6 +5,18 @@
 
 MetroApp::MetroApp() {}
 
+Train MetroApp::getCurrentTrain(std::pair<Train, Train> trains_pairss)
+{
+	train first = trains_pairss.first;
+
+	train second = trains_pairss.second;
+	if (first.getRoute()[0] == first.nextstop)
+	{
+		return second;
+	}
+	return first;
+}
+
 void MetroApp::setTrains(vector<std::pair<Train, Train>> trains_pairss)
 {
 	this->trains_pairs = trains_pairss;
@@ -22,8 +34,8 @@ bool MetroApp::hasPeople()
 void MetroApp::start()
 {
 	readData();
-	metro_coor.setTime(simulation_time);
-	metro_coor.fillTimetable(trains_pairs);
+	//metro_coor.setTime(simulation_time);
+	//metro_coor.fillTimetable(trains_pairs);
 }
 
 min_time MetroApp::run()
