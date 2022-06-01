@@ -8,57 +8,73 @@
 <line x1="260" y1="140" x2="360" y2="140" style="stroke:rgb(0, 0, 0);stroke-width:2" />
 <line x1="360" y1="140" x2="360" y2="80" style="stroke:rgb(0, 0, 0);stroke-width:2" />
 <line x1="360" y1="80" x2="300" y2="40" style="stroke:rgb(0, 0, 0);stroke-width:2" />
-<circle onmouseover=onMouseOverHosting("station0") onmouseout=onMouseOutHosting() cx="80" cy="60" r="6" stroke="black" stroke-width="3" fill="red" />
-<circle onmouseover=onMouseOverHosting("station1") onmouseout=onMouseOutHosting() cx="100" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
-<circle onmouseover=onMouseOverHosting("station2") onmouseout=onMouseOutHosting() cx="180" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
-<circle onmouseover=onMouseOverHosting("station3") onmouseout=onMouseOutHosting() cx="200" cy="220" r="6" stroke="black" stroke-width="3" fill="red" />
-<circle onmouseover=onMouseOverHosting("station4") onmouseout=onMouseOutHosting() cx="240" cy="280" r="6" stroke="black" stroke-width="3" fill="red" />
-<circle onmouseover=onMouseOverHosting("station5") onmouseout=onMouseOutHosting() cx="360" cy="280" r="6" stroke="black" stroke-width="3" fill="red" />
-<circle onmouseover=onMouseOverHosting("station6") onmouseout=onMouseOutHosting() cx="260" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
-<circle onmouseover=onMouseOverHosting("station7") onmouseout=onMouseOutHosting() cx="360" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
-<circle onmouseover=onMouseOverHosting("station8") onmouseout=onMouseOutHosting() cx="360" cy="80" r="6" stroke="black" stroke-width="3" fill="red" />
-<circle onmouseover=onMouseOverHosting("station9") onmouseout=onMouseOutHosting() cx="300" cy="40" r="6" stroke="black" stroke-width="3" fill="red" />
-<circle cx="1" cy="1" r="4" stroke="black" stroke-width="3" fill="blue" />
-<circle cx="1" cy="1" r="4" stroke="black" stroke-width="3" fill="blue" />
+<circle onmouseover=mouseOver("station0") onmouseout=mouseOut() cx="80" cy="60" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=mouseOver("station1") onmouseout=mouseOut() cx="100" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=mouseOver("station2") onmouseout=mouseOut() cx="180" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=mouseOver("station3") onmouseout=mouseOut() cx="200" cy="220" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=mouseOver("station4") onmouseout=mouseOut() cx="240" cy="280" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=mouseOver("station5") onmouseout=mouseOut() cx="360" cy="280" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=mouseOver("station6") onmouseout=mouseOut() cx="260" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=mouseOver("station7") onmouseout=mouseOut() cx="360" cy="140" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=mouseOver("station8") onmouseout=mouseOut() cx="360" cy="80" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=mouseOver("station9") onmouseout=mouseOut() cx="300" cy="40" r="6" stroke="black" stroke-width="3" fill="red" />
+<circle onmouseover=mouseOver("train0") onmouseout=mouseOut() cx="580" cy="580" r="4" fill="blue" />
+<circle onmouseover=mouseOver("train1") onmouseout=mouseOut() cx="580" cy="580" r="4" fill="blue" />
 </svg>
 <div id="station0" style="display:none">
-<strong>Station name:A</strong>
+<strong>Station name: </strong>A
+<br> <strong>Number of people on station: </strong>0
 </div>
 <div id="station1" style="display:none">
-<strong>Station name:B</strong>
+<strong>Station name: </strong>B
+<br> <strong>Number of people on station: </strong>0
 </div>
 <div id="station2" style="display:none">
-<strong>Station name:C</strong>
+<strong>Station name: </strong>C
+<br> <strong>Number of people on station: </strong>0
 </div>
 <div id="station3" style="display:none">
-<strong>Station name:D</strong>
+<strong>Station name: </strong>D
+<br> <strong>Number of people on station: </strong>0
 </div>
 <div id="station4" style="display:none">
-<strong>Station name:E</strong>
+<strong>Station name: </strong>E
+<br> <strong>Number of people on station: </strong>0
 </div>
 <div id="station5" style="display:none">
-<strong>Station name:F</strong>
+<strong>Station name: </strong>F
+<br> <strong>Number of people on station: </strong>0
 </div>
 <div id="station6" style="display:none">
-<strong>Station name:G</strong>
+<strong>Station name: </strong>G
+<br> <strong>Number of people on station: </strong>0
 </div>
 <div id="station7" style="display:none">
-<strong>Station name:H</strong>
+<strong>Station name: </strong>H
+<br> <strong>Number of people on station: </strong>0
 </div>
 <div id="station8" style="display:none">
-<strong>Station name:I</strong>
+<strong>Station name: </strong>I
+<br> <strong>Number of people on station: </strong>0
 </div>
 <div id="station9" style="display:none">
-<strong>Station name:J</strong>
+<strong>Station name: </strong>J
+<br> <strong>Number of people on station: </strong>0
 </div>
-<div id="mycontent" style="position:absolute; left:1000px; top:10px"></div>
+<div id="train0" style="display:none">
+<strong>Train name: </strong>A
+<br> <strong>Train capacity: </strong>100/300
+</div>
+<div id="train1" style="display:none">
+<strong>Train name: </strong>A
+<br> <strong>Train capacity: </strong>100/300
+</div>
+<div id="field" style="position:absolute; left:1000px; top:10px"></div>
 <script>
-function onMouseOverHosting(text) {
-  var html = document.getElementById(text).innerHTML;
-  document.getElementById("mycontent").innerHTML = html;
+function mouseOver(text) {
+  document.getElementById("field").innerHTML = document.getElementById(text).innerHTML;
 }
-function onMouseOutHosting() {
-  var html = "";
-  document.getElementById("mycontent").innerHTML = html;
+function mouseOut() {
+  document.getElementById("field").innerHTML = "";
 }
 </script>

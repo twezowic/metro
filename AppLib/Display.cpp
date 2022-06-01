@@ -11,10 +11,10 @@ string Display::drawStation(int x, int y, int index)
 {
 	x *= size;
 	y *= size;
-	return "<circle onmouseover=onMouseOverHosting(\"station" + to_string(index) + "\") onmouseout=onMouseOutHosting() cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"6\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
+	return "<circle onmouseover=mouseOver(\"station" + to_string(index) + "\") onmouseout=mouseOut() cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"6\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
 }
 
-string Display::drawTrain(int lastStationx, int lastStationy, int nextStationx, int nextStationy, double distance, double actualDistance)
+string Display::drawTrain(int lastStationx, int lastStationy, int nextStationx, int nextStationy, double distance, double actualDistance, int index)
 {
 	double distancePercentage = actualDistance / distance;
 	int newX, newY;
@@ -33,29 +33,39 @@ string Display::drawTrain(int lastStationx, int lastStationy, int nextStationx, 
 		newY = abs(lastStationy - nextStationy) * distancePercentage + lastStationy;
 
 	}
-
-	return "<circle cx=\"" + to_string(newX) + "\" cy=\"" + to_string(newY) + "\" r=\"4\" stroke=\"black\" stroke-width=\"3\" fill=\"blue\" />";
+	newX *= size;
+	newY *= size;
+	return "<circle onmouseover=mouseOver(\"train" + to_string(index) + "\") onmouseout=mouseOut() cx=\"" + to_string(newX) + "\" cy=\"" + to_string(newY) + "\" r=\"4\" fill=\"blue\" />";
 }
 string Display::addScripts()
 {
-	return R""""(<div id="mycontent" style="position:absolute; left:1000px; top:10px"></div>
+	return R""""(<div id="field" style="position:absolute; left:1000px; top:10px"></div>
 <script>
-function onMouseOverHosting(text) {
-  var html = document.getElementById(text).innerHTML;
-  document.getElementById("mycontent").innerHTML = html;
+function mouseOver(text) {
+  document.getElementById("field").innerHTML = document.getElementById(text).innerHTML;
 }
-function onMouseOutHosting() {
-  var html = "";
-  document.getElementById("mycontent").innerHTML = html;
+function mouseOut() {
+  document.getElementById("field").innerHTML = "";
 }
 </script>)"""";
 }
 
-string Display::addStationInfo(int index, string name)
+string Display::addStationInfo(int index, string name, int peopleNumber)
 {
 	string result;
 	result += "<div id=\"station" + to_string(index) + "\" style=\"display:none\">\n";
-	result += "<strong>Station name:" + name + "</strong>\n";
+	result += "<strong>Station name: </strong>" + name + "\n";
+	result += "<br> <strong>Number of people on station: </strong>" + to_string(peopleNumber) + '\n';
+	result += "</div>\n";
+	return result;
+}
+
+string Display::addTrainInfo(int index, string name, int maxCapacity, int peopleNumber)
+{
+	string result;
+	result += "<div id=\"train" + to_string(index) + "\" style=\"display:none\">\n";
+	result += "<strong>Train name: </strong>" + name + "\n";
+	result += "<br> <strong>Train capacity: </strong>" + to_string(peopleNumber) + '/' + to_string(maxCapacity) + '\n';
 	result += "</div>\n";
 	return result;
 }
@@ -63,7 +73,7 @@ string Display::addStationInfo(int index, string name)
 
 void Display::create_map(MetroApp metroapp)
 {
-	string result, stationInfos;
+	string result, informations;
 	result += "<svg  version = \"1.1\" xmlns = \"http://www.w3.org/2000/svg\" width=\"1000\" height=\"1000\">\n";
 	//connections
 	for (int i = 0; i < metroapp.getConnections().size(); i++)
@@ -82,17 +92,18 @@ void Display::create_map(MetroApp metroapp)
 		x = metroapp.getCoordinator().getStations()[i].x;
 		y = metroapp.getCoordinator().getStations()[i].y;
 		result += drawStation(x, y, i) + '\n';
-		stationInfos += addStationInfo(i, metroapp.getCoordinator().getStations()[i].getName());
+		informations += addStationInfo(i, metroapp.getCoordinator().getStations()[i].getName(), metroapp.getCoordinator().getStations()[i].getWaitingList().size());
 	}
 	// trains
 	for (int i = 0; i < metroapp.getTrains().size(); i++)
 	{
-		int lastStationx = 1, lastStationy = 1, nextStationx = 1, nextStationy = 1;
-		double distance = 1, actualDistance = 1;
-		result += drawTrain(lastStationx, lastStationy, nextStationx, nextStationy, distance, actualDistance) + '\n';
+		int lastStationx = 20, lastStationy = 20, nextStationx = 1, nextStationy = 1;
+		double distance = 2, actualDistance = 1;
+		result += drawTrain(lastStationx, lastStationy, nextStationx, nextStationy, distance, actualDistance, i) + '\n';
+		informations += addTrainInfo(i, "A", 300, 100);
 	}
 	result += "</svg>\n";
-	result += stationInfos + addScripts();
+	result += informations + addScripts();
 	fstream file("../station.html", ios::out);
 	file << result;
 	file.close();
