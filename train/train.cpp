@@ -118,6 +118,7 @@ void train::newstop()
             if (i != this->getRoute().size() - 1)
             {
                 nextstop = this->getRoute()[i + 1];
+                break;
             }
             else
             {

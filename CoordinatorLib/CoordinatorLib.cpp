@@ -269,7 +269,16 @@ vector<Station*> Coordinator::dijkstra(int start, int second)
 			int koszt = (station_vec[presentpozition].vec()[i])->distance(present.second);
 
 			int disttous = distan[presentpozition].second;
-			int distancetosec = distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].second;
+			int distancetosec;
+			if (getpozition((station_vec[presentpozition].vec()[i])->getstation2id()) != presentpozition)
+			{
+				 distancetosec = distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].second;
+			}
+			else
+			{
+				 distancetosec = distan[getpozition((station_vec[presentpozition].vec()[i])->getstation1id())].second;
+
+			}
 			if (disttous + koszt < distancetosec)
 			{   //(stations[presentpozition]->vec()[i])->distance(presentpozition)odleg�os� obecnegopo�
 				distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].second = (station_vec[presentpozition].vec()[i])->distance(present.second) + distan[presentpozition].second;
