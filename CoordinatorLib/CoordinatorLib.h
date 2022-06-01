@@ -26,6 +26,7 @@ private:
 public:
 	Coordinator();
 	std::vector<Station> getStations() { return station_vec; }
+	min_time getTime() { return cur_time; }
 	void setTime(min_time starting_time);
 	void increaseTime(min_time& simulation_time);
 	void HandleStations();

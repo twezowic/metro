@@ -14,6 +14,10 @@ class train
     Station* nextstop;
 public:
     train(int id1,string name1,int maxcapity);
+    Station* getNextStop() { return nextstop; }
+    string getName() { return name; }
+    int getMaxCapacity() { return maxcapity; }
+    int getPeopleNumber() { return people.size(); }
     void setroute(vector <Station*> route);
     bool isfull();
     string toString();

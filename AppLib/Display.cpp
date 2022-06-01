@@ -14,28 +14,11 @@ string Display::drawStation(int x, int y, int index)
 	return "<circle onmouseover=mouseOver(\"station" + to_string(index) + "\") onmouseout=mouseOut() cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"6\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
 }
 
-string Display::drawTrain(int lastStationx, int lastStationy, int nextStationx, int nextStationy, double distance, double actualDistance, int index)
+string Display::drawTrain(int x, int y, int index)
 {
-	double distancePercentage = actualDistance / distance;
-	int newX, newY;
-
-	if (lastStationx - nextStationx != 0)
-	{
-		int lineEquationX = (lastStationy - nextStationy) / (lastStationx - nextStationx);
-		int lineEquationY = lastStationy - ((lastStationy - nextStationy) / (lastStationx - nextStationx)) * lastStationx;
-
-		newX = abs(lastStationx - nextStationx) * distancePercentage + lastStationx;
-		newY = lineEquationX * newX + lineEquationY;
-	}
-	else
-	{
-		newX = lastStationx;
-		newY = abs(lastStationy - nextStationy) * distancePercentage + lastStationy;
-
-	}
-	newX *= size;
-	newY *= size;
-	return "<circle onmouseover=mouseOver(\"train" + to_string(index) + "\") onmouseout=mouseOut() cx=\"" + to_string(newX) + "\" cy=\"" + to_string(newY) + "\" r=\"4\" fill=\"blue\" />";
+	x *= size;
+	y *= size;
+	return "<circle onmouseover=mouseOver(\"train" + to_string(index) + "\") onmouseout=mouseOut() cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"4\" fill=\"blue\" />";
 }
 string Display::addScripts()
 {
@@ -97,10 +80,12 @@ void Display::create_map(MetroApp metroapp)
 	// trains
 	for (int i = 0; i < metroapp.getTrains().size(); i++)
 	{
-		int lastStationx = 20, lastStationy = 20, nextStationx = 1, nextStationy = 1;
-		double distance = 2, actualDistance = 1;
-		result += drawTrain(lastStationx, lastStationy, nextStationx, nextStationy, distance, actualDistance, i) + '\n';
-		informations += addTrainInfo(i, "A", 300, 100);
+		int x, y;
+		Train train = metroapp.getCurrentTrain(metroapp.getTrains()[i]);
+		x = train.getx(metroapp.getCoordinator().getTime());
+		y = train.gety(metroapp.getCoordinator().getTime());
+		result += drawTrain(x, y, i) + '\n';
+		informations += addTrainInfo(i, train.getName(), train.getMaxCapacity(), train.getPeopleNumber());
 	}
 	result += "</svg>\n";
 	result += informations + addScripts();
