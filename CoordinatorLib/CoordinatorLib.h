@@ -36,7 +36,7 @@ public:
 	Station* getStation(int id);
 	void setStations(vector<Station> stations);
 	void fillTimetable(std::vector<std::pair<Train, Train>>& train_pairs_vec); //@TODO
-	bool assignTrainRoute(Train& cur_train, min_time& temp_time);
+	bool assignTrainRoute(Train* cur_train, min_time& temp_time);
 
 	// methods below might be useful to refactorise the code
 	void AddPersonToTrain(Person& person, Train& train);

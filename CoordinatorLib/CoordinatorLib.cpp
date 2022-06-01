@@ -12,7 +12,7 @@ void Coordinator::fillTimetable(std::vector<std::pair<Train, Train>>& train_pair
 {
 	for (auto train_ite = train_pairs_vec.begin(); train_ite != train_pairs_vec.end(); ++train_ite)
 	{
-		Train& cur_train = (*train_ite).first;
+		Train* cur_train = &(*train_ite).first;
 		min_time temp_time = cur_time;
 		int loop_num = 0;
 		bool reached_midnight = false;
@@ -21,36 +21,43 @@ void Coordinator::fillTimetable(std::vector<std::pair<Train, Train>>& train_pair
 
 			reached_midnight = assignTrainRoute(cur_train, temp_time);
 			if (loop_num % 2 == 0)
-				cur_train = (*train_ite).second;
+				cur_train = &(*train_ite).second;
 			else
-				cur_train = (*train_ite).first;
-			temp_time += 10;
+				cur_train = &(*train_ite).first;
 			++loop_num;
 		} while (!reached_midnight);
+	
 	}
-
+	for (auto stat_ite = station_vec.begin(); stat_ite != station_vec.end(); ++stat_ite)
+	{
+		(*stat_ite).hasTrains(cur_time); // resets the timetable time to the beginning of simulation
+	}
 }
 
-bool Coordinator::assignTrainRoute(Train& cur_train, min_time& temp_time)
+bool Coordinator::assignTrainRoute(Train* cur_train, min_time& temp_time)
 {
-	Station* cur_station = cur_train.getRoute()[0];
+	Station* cur_station = cur_train->getRoute()[0];
 	bool reached_end_of_route = false;
 	int i = 0;
 	while(!reached_end_of_route)
 	{
 
-		Station* cur_station = cur_train.getRoute()[i];
-		Station* next_station = cur_train.getRoute()[i+1];
+		Station* cur_station = cur_train->getRoute()[i];
+		Station* next_station = cur_train->getRoute()[i+1];
 
-		cur_station->add_timetable(cur_train, temp_time);
+		cur_station->add_timetable(*cur_train, temp_time);
 
 		temp_time += cur_station->getConnectionTime(next_station);
 		if (temp_time > 24 * 60)
 			return true;
 
-		if (next_station == cur_train.getRoute().back())
+		if (next_station == cur_train->getRoute().back())
 		{
-			next_station->add_timetable(cur_train, temp_time);
+			next_station->add_timetable(*cur_train, temp_time);
+			temp_time += 10; // 10 is the time of stop at the end of the route of train
+			if (temp_time > 24 * 60)
+				return true;
+
 			reached_end_of_route = true;
 		}
 		++i;

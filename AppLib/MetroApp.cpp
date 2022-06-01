@@ -37,9 +37,12 @@ bool MetroApp::hasPeople()
 
 void MetroApp::start()
 {
+	srand(time(NULL));
+	int people_number = 100; // @TODO
 	readData();
 	metro_coor.setTime(simulation_time);
 	metro_coor.fillTimetable(trains_pairs);
+	generatePeople(people_number);
 }
 
 min_time MetroApp::run()
@@ -145,6 +148,15 @@ void MetroApp::readData()
 	readStationscsv();
 	readConnectionscsv();
 	readTrainscsv();
+}
+
+void MetroApp::generatePeople(int people_number)
+{
+	int start_stat = rand() % metro_coor.getStations().size();
+	int end_stat = rand() % metro_coor.getStations().size();
+	
+	//person_vec.push_back(Person())
+
 }
 
 Station* MetroApp::getStation(int id)

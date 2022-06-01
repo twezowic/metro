@@ -5,6 +5,7 @@
 #include<fstream>
 #include<sstream>
 #include<cmath>
+#include <random>
 
 class MetroApp
 {
@@ -12,7 +13,7 @@ private:
 	Coordinator metro_coor;
 	std::vector<std::pair<Train, Train>> trains_pairs; // since coordinator doesn't have this, metro probably should to ensure they don't get deleted
 	std::vector<conection> connect_vec; // same as with trains
-
+	std::vector<Person> person_vec;
 public:
 	min_time simulation_time = 720; //@TODO change time declaration
 	
@@ -29,6 +30,7 @@ public:
 	void readConnectionscsv();
 	void readTrainscsv();
 	void readData();
+	void generatePeople(int people_number);
 
 	void start();
 
