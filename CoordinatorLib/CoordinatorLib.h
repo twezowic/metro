@@ -29,7 +29,7 @@ public:
 	min_time getTime() { return cur_time; }
 	void setTime(min_time starting_time);
 	void increaseTime(min_time& simulation_time);
-	void HandleStations();
+	void HandleStations(int& people_in_metro);
 	bool isTheTrainOnStation(Train* the_train, std::vector<Train*> trains_on_stat);
 	// methods used while starting the application
 	void addStation(Station new_stat);
@@ -37,7 +37,7 @@ public:
 	void setStations(vector<Station> stations);
 	void fillTimetable(std::vector<std::pair<Train, Train>>& train_pairs_vec); //@TODO
 	bool assignTrainRoute(Train* cur_train, min_time& temp_time);
-
+	void removePersonFromMetro();
 
 	int getpozition(int id);
 	vector<Station*> dijkstra(int start, int second);
