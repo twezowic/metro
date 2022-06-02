@@ -16,7 +16,7 @@ min_time Station::getConnectionTime(Station* next_station)
 
     }
     return -1;
-}//@TODO
+}
 Station::Station(string name1, int id1, int x1, int y1) :point(x1, y1, id1)
 {
     name = name1;

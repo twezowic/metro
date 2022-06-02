@@ -153,7 +153,6 @@ void MetroApp::readStationscsv()
 }
 void MetroApp::readConnectionscsv()
 {
-	//vector<conection> connections;
 	vector<string> row;
 	string line, word;
 

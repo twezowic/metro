@@ -19,7 +19,7 @@ private:
 	int people_in_metro;
 	void addPeopleToStations();
 public:
-	min_time simulation_time; //@TODO change time declaration
+	min_time simulation_time;
 	
 	MetroApp(min_time start_time);
 	Coordinator getCoordinator() { return metro_coor; }
