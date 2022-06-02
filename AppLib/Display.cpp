@@ -14,7 +14,7 @@ string Display::drawStation(int x, int y, int index)
 	return "<circle onmouseover=mouseOver(\"station" + to_string(index) + "\") onmouseout=mouseOut() cx=\"" + to_string(x) + "\" cy=\"" + to_string(y) + "\" r=\"6\" stroke=\"black\" stroke-width=\"3\" fill=\"red\" />";
 }
 
-string Display::drawTrain(int x, int y, int index)
+string Display::drawTrain(double x, double y, int index)
 {
 	x *= size;
 	y *= size;
@@ -71,7 +71,7 @@ void Display::create_map(MetroApp metroapp)
 	// stations
 	for (int i = 0; i < metroapp.getCoordinator().getStations().size(); i++)
 	{
-		int x, y;
+		double x, y;
 		x = metroapp.getCoordinator().getStations()[i].x;
 		y = metroapp.getCoordinator().getStations()[i].y;
 		result += drawStation(x, y, i) + '\n';
@@ -80,7 +80,7 @@ void Display::create_map(MetroApp metroapp)
 	// trains
 	for (int i = 0; i < metroapp.getTrains().size(); i++)
 	{
-		int x, y;
+		double x, y;
 		Train train = metroapp.getCurrentTrain(metroapp.getTrains()[i]);
 		x = train.getx(metroapp.getCoordinator().getTime());
 		y = train.gety(metroapp.getCoordinator().getTime());
