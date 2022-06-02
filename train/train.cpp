@@ -59,7 +59,7 @@ double train::getx(int time)
     int conectiontime = this->getRoute()[i]->getConnectionTime(nextstop);
     int starttime = simultime - conectiontime;
     int progres = time - starttime;
-    double mul = progres / conectiontime;
+    double mul = (progres*1.00) / conectiontime;
     int x1 = this->getRoute()[i]->x;
     int x2 = nextstop->x;
     x = x1 + (x2 - x1) * mul;
@@ -102,7 +102,7 @@ double train::gety(int time)
     int conectiontime = this->getRoute()[i]->getConnectionTime(nextstop);
     int starttime = simultime - conectiontime;
     int progres = time - starttime;
-    double mul = progres / conectiontime;
+    double mul = (progres*1.00) / conectiontime;
     int y1 = this->getRoute()[i]->y;
     int y2 = nextstop->y;
     y = y1 + (y2 - y1) * mul;

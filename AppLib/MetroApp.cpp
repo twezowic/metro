@@ -54,6 +54,8 @@ void MetroApp::start(int people_number, min_time start_time)
 min_time MetroApp::run()
 {
 	int input=1;
+
+	//int input=6;
 	auto display = Display();
 	auto display_text = Display_text();
 	while (input!=0)
@@ -90,8 +92,15 @@ min_time MetroApp::run()
 		}
 		case (6):
 		{
-			metro_coor.HandleStations(this->people_in_metro);
-			metro_coor.increaseTime(simulation_time);
+			int forward_time;
+			std::cout << "How many minutes would you like to forward the time to: ";
+			std::cin >> forward_time;
+			for (int i = 0; i < forward_time; ++i)
+			{
+				metro_coor.HandleStations(this->people_in_metro);
+				metro_coor.increaseTime(simulation_time);
+			}
+
 			break;
 		}
 		default:
@@ -200,15 +209,14 @@ void MetroApp::generatePeople(int people_number)
 {
 	while(people_number > 0)
 	{
-		auto a = 3;
-		auto b = 5;
-		//auto a = rand() % metro_coor.getStations().size();
-		//auto b = rand() % metro_coor.getStations().size();
+		//auto a = 3;
+		//auto b = 3;
+		auto a = rand() % metro_coor.getStations().size();
+		auto b = rand() % metro_coor.getStations().size();
 		int start_stat_id = metro_coor.getStations()[a].getid();
 		int end_stat_id = metro_coor.getStations()[b].getid();
 		person_vec.push_back(Person(metro_coor.dijkstra(start_stat_id, end_stat_id)));
-		//--people_number;
-		break;
+		--people_number;
 	}
 }
 void MetroApp::addPeopleToStations()

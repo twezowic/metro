@@ -102,7 +102,8 @@ void Coordinator::HandleStations(int& people_in_metro) //@TODO when a passeneger
 						--people_in_metro;
 						// here the person should be destroyed, if it was dynamically generated
 					}
-					waiting_list.push_back((*person_ite));
+					else
+						waiting_list.push_back((*person_ite));
 				}
 				else
 					new_person_in_train_vec.push_back((*person_ite));
@@ -281,11 +282,24 @@ vector<Station*> Coordinator::dijkstra(int start, int second)
 			}
 			if (disttous + koszt < distancetosec)
 			{   //(stations[presentpozition]->vec()[i])->distance(presentpozition)odleg�os� obecnegopo�
-				distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].second = (station_vec[presentpozition].vec()[i])->distance(present.second) + distan[presentpozition].second;
-				distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].first = presentpozition;
+				if (getpozition((station_vec[presentpozition].vec()[i])->getstation2id()) != presentpozition)
+				{
+					distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].second = (station_vec[presentpozition].vec()[i])->distance(present.second) + distan[presentpozition].second;
+					distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].first = presentpozition;
 
-				tovisit.push(pair<int, int>(-distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].second, station_vec[presentpozition].vec()[i]->getstation2id()));
-			}
+					tovisit.push(pair<int, int>(-distan[getpozition((station_vec[presentpozition].vec()[i])->getstation2id())].second, station_vec[presentpozition].vec()[i]->getstation2id()));
+
+				}
+				else
+				{
+					distan[getpozition((station_vec[presentpozition].vec()[i])->getstation1id())].second = (station_vec[presentpozition].vec()[i])->distance(present.second) + distan[presentpozition].second;
+					distan[getpozition((station_vec[presentpozition].vec()[i])->getstation1id())].first = presentpozition;
+
+					tovisit.push(pair<int, int>(-distan[getpozition((station_vec[presentpozition].vec()[i])->getstation1id())].second, station_vec[presentpozition].vec()[i]->getstation1id()));
+
+
+				}
+				}
 		}
 		tovisit.pop();
 	}
