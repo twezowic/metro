@@ -45,7 +45,7 @@ void MetroApp::start(int people_number, min_time start_time)
 	readData();
 	metro_coor.setTime(start_time);
 	metro_coor.fillTimetable(trains_pairs);
-	//generatePeople(people_number);
+	generatePeople(people_number);
 	addPeopleToStations();
 
 	people_in_metro = person_vec.size();
