@@ -14,6 +14,8 @@ public:
 	virtual void create_map(MetroApp metroapp);
 	string showStations(MetroApp metroapp);
 	string showTrains(MetroApp metroapp);
+	string showTime(int time);
+	string showSimulationTime(int time);
 
 	string showMenu();
 };

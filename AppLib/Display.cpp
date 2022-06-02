@@ -22,7 +22,8 @@ string Display::drawTrain(double x, double y, int index)
 }
 string Display::addScripts()
 {
-	return R""""(<div id="field" style="position:absolute; left:1000px; top:10px"></div>
+	string result = "<div id = \"field\" style = \"position:absolute; left:" + to_string(width) + "px; top:10px\"> </div>";
+	result += R""""(
 <script>
 function mouseOver(text) {
   document.getElementById("field").innerHTML = document.getElementById(text).innerHTML;
@@ -31,6 +32,7 @@ function mouseOut() {
   document.getElementById("field").innerHTML = "";
 }
 </script>)"""";
+	return result;
 }
 
 string Display::addStationInfo(int index, string name, int peopleNumber)

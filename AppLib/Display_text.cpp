@@ -95,14 +95,34 @@ string Display_text::showTrains(MetroApp metroapp)
 string Display_text::showMenu()
 {
 	string menu;
-	cout << "Welcome to metro configuration.\n\n";
+	cout << "Welcome to metro simulation.\n\n";
 	cout << "1. Show stations.\n";
 	cout << "2. Show trains.\n";
 	cout << "3. Show map in terminal.\n";
 	cout << "4. Update map in html.\n";
-	cout << "5. Show cuurent time of simulation.\n";
-	cout << "6. Pass 1 minute in simulation.\n";
+	cout << "5. Show current time of simulation.\n";
+	cout << "6. Pass n minutes in simulation.\n";
 	cout << "0. End the program.\n\n";
 	cout << "Please input the number: ";
 	return menu;
+}
+
+string Display_text::showTime(int time)
+{
+	string hour=to_string(time/60), minute=to_string(time%60);
+	if (minute == "0")
+	{
+		minute = "00";
+	}
+	return  "Current time in metro: " + hour + ':' + minute  +'\n';
+}
+
+string Display_text::showSimulationTime(int time)
+{
+	string day, hour, minute;
+	day = to_string(time / (24 * 60));
+	time %= (24 * 60);
+	hour = to_string(time / 60);
+	minute = to_string(time % 60);
+	return "Simulation time : Days: " + day + ", hours: " + hour + ", minutes: " + minute + "\n\n";
 }

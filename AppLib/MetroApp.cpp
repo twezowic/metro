@@ -54,8 +54,7 @@ void MetroApp::start(int people_number, min_time start_time)
 min_time MetroApp::run()
 {
 	int input=1;
-
-	//int input=6;
+	bool goForward = false;
 	auto display = Display();
 	auto display_text = Display_text();
 	while (input!=0)
@@ -87,7 +86,8 @@ min_time MetroApp::run()
 		}
 		case (5):
 		{
-			cout << "Simulation time: " << metro_coor.getTime() << endl;
+			cout  << display_text.showTime(metro_coor.getTime());
+			cout  << display_text.showSimulationTime(simulation_time);
 			break;
 		}
 		case (6):
@@ -99,13 +99,28 @@ min_time MetroApp::run()
 			{
 				metro_coor.HandleStations(this->people_in_metro);
 				metro_coor.increaseTime(simulation_time);
+				if (!people_in_metro and !goForward)
+				{
+					cout << display_text.showSimulationTime(simulation_time);
+					cout << "There are no more people in metro\nDo you want to continue?\n0/1: ";
+					cin >> input;
+					if (input == 0)
+					{
+						break;
+					}
+					else
+					{
+						goForward = true;
+					}
+					
+				}
 			}
-
 			break;
 		}
 		default:
 			break;
 		}
+		goForward = false;
 	}
 	return simulation_time;
 }
