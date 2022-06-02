@@ -4,7 +4,7 @@
 
 
 
-MetroApp::MetroApp() { simulation_time = 0; people_in_metro = 0; }
+MetroApp::MetroApp(min_time start_time): metro_start_time(start_time) { simulation_time = 0; people_in_metro = 0; }
 
 Train MetroApp::getCurrentTrain(std::pair<Train, Train> trains_pairss)
 {
@@ -41,7 +41,7 @@ bool MetroApp::hasPeople()
 
 void MetroApp::start(int people_number, min_time start_time)
 {
-	//srand(time(NULL));
+	srand(time(NULL));
 	readData();
 	metro_coor.setTime(start_time);
 	metro_coor.fillTimetable(trains_pairs);
@@ -50,6 +50,7 @@ void MetroApp::start(int people_number, min_time start_time)
 
 	people_in_metro = person_vec.size();
 }
+
 
 min_time MetroApp::run()
 {
@@ -222,10 +223,8 @@ void MetroApp::readData()
 
 void MetroApp::generatePeople(int people_number)
 {
-	while(people_number > 0)
+	while (people_number > 0)
 	{
-		//auto a = 3;
-		//auto b = 3;
 		auto a = rand() % metro_coor.getStations().size();
 		auto b = rand() % metro_coor.getStations().size();
 		int start_stat_id = metro_coor.getStations()[a].getid();
@@ -234,6 +233,7 @@ void MetroApp::generatePeople(int people_number)
 		--people_number;
 	}
 }
+
 void MetroApp::addPeopleToStations()
 {
 	for (auto ite = person_vec.begin(); ite != person_vec.end(); ++ite)

@@ -28,7 +28,7 @@ public:
 	std::vector<Station> getStations() { return station_vec; }
 	min_time getTime() { return cur_time; }
 	void setTime(min_time starting_time);
-	void increaseTime(min_time& simulation_time);
+	void increaseTime(min_time& simulation_time, min_time metro_start_time);
 	void HandleStations(int& people_in_metro);
 	bool isTheTrainOnStation(Train* the_train, std::vector<Train*> trains_on_stat);
 	// methods used while starting the application
@@ -37,7 +37,8 @@ public:
 	void setStations(vector<Station> stations);
 	void fillTimetable(std::vector<std::pair<Train, Train>>& train_pairs_vec); //@TODO
 	bool assignTrainRoute(Train* cur_train, min_time& temp_time);
-	void removePersonFromMetro();
+	void moveTrainToStartingStation(int cur_stat_number, min_time temp_time, Train* cur_train);
+	//void removePersonFromMetro();
 
 	int getpozition(int id);
 	vector<Station*> dijkstra(int start, int second);
