@@ -99,7 +99,7 @@ min_time MetroApp::run()
 			for (int i = 0; i < forward_time; ++i)
 			{
 				metro_coor.HandleStations(this->people_in_metro);
-				metro_coor.increaseTime(simulation_time);
+				metro_coor.increaseTime(simulation_time, metro_start_time);
 				if (!people_in_metro and !goForward)
 				{
 					cout << display_text.showSimulationTime(simulation_time);
