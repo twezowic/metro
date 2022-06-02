@@ -1,4 +1,4 @@
-#pragma once
+#pragma once //all done by Michal Bogiel
 using namespace std;
 #include <vector>
 typedef int min_time;

@@ -2,7 +2,7 @@
 #pragma once
 #include <string>
 #include "./one_wayconection.h"
-
+//all done by Michal Bogiel
 class Station;
 using namespace std;
 class conection: public one_wayconection

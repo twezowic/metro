@@ -1,3 +1,7 @@
+//everything except for reading files was done by Damian Pałyska
+//main aplication and reading files by Tomasz Wężowicz
+
+
 #pragma once
 #include "../CoordinatorLib/CoordinatorLib.h"
 #include "../station/station.h"

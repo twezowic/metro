@@ -1,6 +1,6 @@
 #ifndef POINT_H
 #define POINT_H
-
+//all done by Michal Bogiel
 
 class point
 {

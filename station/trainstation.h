@@ -1,4 +1,6 @@
 #include "station.h"
+////all done by Michal Bogiel but not used
+
 class trainstation : public Station
 {
     int perons;
