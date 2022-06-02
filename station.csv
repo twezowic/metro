@@ -1,11 +1,49 @@
-Id;Name;x;y
-1;Binworth Town;4;3
-2;Wington Way;5;7
-3;Nembrington Wood;9;7
-4;Upnor West;10;11
-5;Profacton Wood;12;14
-6;Broughton City;18;14
-7;New West;13;7
-8;Grunham South;18;7
-9;Old Down;18;4
-10;Badgers North;15;2
+Id;name;x;y
+1;Mlociny;8;1
+2;Wawrzyszew;9;2
+3;Stare Bielany;10;4
+4;Slodowiec;11;5
+5;Marymony;13;6
+6;Plac Wilsona;15;7
+7;Dworzec Gdanski;15;9
+8;Ratusz Arsenal;15;11
+9;Swietokrzyska;15;12
+10;Centrum;15;13
+11;Politechnika;15;15
+12;Pole Mokotowskie;13;16
+13;Raclawicka;13;17
+14;Wierzbno;14;18
+15;Wilanowska;15;19
+16;Sluzew;15;20
+17;Ursynow;15;21
+18;Stoklosy;16;21
+19;Imielin;17;22
+20;Natolin;18;23
+21;Kabaty;19;24
+22;Karolin;1;16
+23;Chrzanow;2;15
+24;Lazurowa;4;11
+25;Bemowo;5;12
+26;Ulrychow;6;12
+27;Ksiecia Janusza;7;12
+28;Mlynow;8;12
+29;Plocka;10;13
+30;Rondo Daszynskiego;13;14
+31;Rondo ONZ;14;13
+32;Nowy Swiat Uniwersytet;16;12
+33;Centrum Nauki Kopernik;17;12
+34;Stadion Narodowy;19;13
+35;Dworzec Wilenski;18;11
+36;Szwedzka;20;10
+37;Targowek Mieszkaniowy;22;9
+38;Trocka;23;8
+39;Zacisze;24;6
+40;Kondratowicza;21;5
+41;Brodno;19;4
+42;Dworzec Wschodni;21;12
+43;Minska;24;13
+44;Kozia Gorka;24;11
+45;Rondo Wiatraczna;25;15
+46;Ostrobramska;24;17
+47;Fieldorfa;25;19
+48;Goclaw;25;20
