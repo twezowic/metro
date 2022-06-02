@@ -52,7 +52,7 @@ bool Coordinator::assignTrainRoute(Train* cur_train, min_time& temp_time)
 		if (next_station == cur_train->getRoute().back())
 		{
 			next_station->add_timetable(*cur_train, temp_time%1440);
-			temp_time += 10; // 10 is the time of stop at the end of the route of train
+			temp_time += 1; // 10 is the time of stop at the end of the route of train
 			if (temp_time > 24 * 60)
 				return true;
 
