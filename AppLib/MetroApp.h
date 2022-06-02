@@ -11,6 +11,7 @@ class Display;
 class MetroApp
 {
 private:
+	min_time metro_start_time;
 	Coordinator metro_coor;
 	std::vector<std::pair<Train, Train>> trains_pairs; // since coordinator doesn't have this, metro probably should to ensure they don't get deleted
 	std::vector<conection> connect_vec; // same as with trains
@@ -20,7 +21,7 @@ private:
 public:
 	min_time simulation_time; //@TODO change time declaration
 	
-	MetroApp();
+	MetroApp(min_time start_time);
 	Coordinator getCoordinator() { return metro_coor; }
 	std::vector<std::pair<Train, Train>> getTrains() { return trains_pairs; }
 	std::vector<conection> getConnections() { return connect_vec; }

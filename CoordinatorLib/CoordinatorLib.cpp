@@ -26,7 +26,7 @@ void Coordinator::fillTimetable(std::vector<std::pair<Train, Train>>& train_pair
 				cur_train = &(*train_ite).first;
 			++loop_num;
 		} while (!reached_midnight);
-	
+
 	}
 	for (auto stat_ite = station_vec.begin(); stat_ite != station_vec.end(); ++stat_ite)
 	{
@@ -48,37 +48,70 @@ bool Coordinator::assignTrainRoute(Train* cur_train, min_time& temp_time)
 		cur_station->add_timetable(*cur_train, temp_time);
 
 		temp_time += cur_station->getConnectionTime(next_station);
-		if (temp_time > 24 * 60)
-			return true;
-
+		
 		if (next_station == cur_train->getRoute().back())
 		{
-			next_station->add_timetable(*cur_train, temp_time);
+			next_station->add_timetable(*cur_train, temp_time%1440);
 			temp_time += 10; // 10 is the time of stop at the end of the route of train
 			if (temp_time > 24 * 60)
 				return true;
 
 			reached_end_of_route = true;
 		}
+		if (temp_time > 24 * 60)
+		{
+			temp_time = temp_time % 1440;
+			moveTrainToStartingStation(i+1, temp_time, cur_train);
+			return true;
+		}
 		++i;
 		} 
 	return false;
+}
+
+void Coordinator::moveTrainToStartingStation(int cur_stat_num, min_time temp_time, Train* cur_train)
+{
+	Station* cur_station = cur_train->getRoute()[0];
+	bool reached_end_of_route = false;
+	int i = cur_stat_num;
+	while (!reached_end_of_route)
+	{
+
+		Station* cur_station = cur_train->getRoute()[i];
+		Station* next_station = cur_train->getRoute()[i + 1];
+
+		cur_station->add_timetable(*cur_train, temp_time);
+
+		temp_time += cur_station->getConnectionTime(next_station);
+
+		if (next_station == cur_train->getRoute().back())
+		{
+			next_station->add_timetable(*cur_train, temp_time);
+			reached_end_of_route = true;
+		}
+		++i;
+	}
 }
 
 void Coordinator::setTime(min_time starting_time) {
 	cur_time = starting_time;
 }
 
-void Coordinator::increaseTime(min_time& simulation_time)
+void Coordinator::increaseTime(min_time& simulation_time, min_time metro_start_time)
 { // as of right now, this means - increasing the time by one minute
 	++cur_time;
 	++simulation_time;
 	if (cur_time == 1440)
-		cur_time = 0;
+	{
+		cur_time = 1;
+		simulation_time += 1;
+	}
 }
 
 void Coordinator::HandleStations(int& people_in_metro) //@TODO when a passeneger gets to the end of his route
 {
+	if (cur_time == 1200)
+		int ha = people_in_metro;
 	for (auto stat_ite = station_vec.begin(); stat_ite != station_vec.end(); ++stat_ite)
 	{
 		std::vector<Train*> trains_on_station;
@@ -152,6 +185,7 @@ std::vector<Train*> Coordinator::findNextTrains(Station& station)
 	{
 		std::pair<std::vector<Train*>, min_time> train_time_pair = station.nexttrain(time_offset);
 		time_offset = train_time_pair.second + 1;
+
 		train_vec.insert(train_vec.end(), train_time_pair.first.begin(), train_time_pair.first.end());
 		i += train_time_pair.first.size();
 	} while (i < NUMBER_OF_TRAINS);

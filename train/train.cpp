@@ -30,6 +30,10 @@ double train::getx(int time)
 
     std:pair<vector<train*>,int>  para = nextstop->nexttrain(simultime);
         simultime = para.second + 1;
+        if (simultime == 2401)
+        {
+            auto ahahahah = 20;
+        }
         vector<train*> trains = para.first;
         for (int i = 0; i < trains.size(); i++)
         {
