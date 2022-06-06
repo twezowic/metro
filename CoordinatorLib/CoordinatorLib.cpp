@@ -109,8 +109,6 @@ void Coordinator::increaseTime(min_time& simulation_time, min_time metro_start_t
 
 void Coordinator::HandleStations(int& people_in_metro)
 {
-	if (cur_time == 1200)
-		int ha = people_in_metro;
 	for (auto stat_ite = station_vec.begin(); stat_ite != station_vec.end(); ++stat_ite)
 	{
 		std::vector<Train*> trains_on_station;
