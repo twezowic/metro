@@ -4,7 +4,7 @@
 
 
 
-MetroApp::MetroApp(min_time start_time): metro_start_time(start_time) { simulation_time = 0; people_in_metro = 0; }
+MetroApp::MetroApp(min_time start_time) : metro_start_time(start_time) { simulation_time = 0; people_in_metro = 0; person_vec.reserve(10000); }
 
 Train MetroApp::getCurrentTrain(std::pair<Train, Train> trains_pairss)
 {
@@ -116,6 +116,16 @@ min_time MetroApp::run()
 					
 				}
 			}
+			break;
+		}
+		case(7):
+		{
+			int people_number;
+			cout << "How many people would you like to add: ";
+			cin >> people_number;
+			generatePeople(people_number);
+			addPeopleToStations();
+			people_in_metro += people_number;
 			break;
 		}
 		default:

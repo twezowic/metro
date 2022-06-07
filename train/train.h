@@ -1,5 +1,5 @@
 #pragma once
-
+//all done by Michal Bogiel
 #include <vector>
 #include <string>
 #include "../person/people.h"

@@ -102,6 +102,7 @@ string Display_text::showMenu()
 	cout << "4. Update map in html.\n";
 	cout << "5. Show current time of simulation.\n";
 	cout << "6. Pass n minutes in simulation.\n";
+	cout << "7. Add people to metro.\n";
 	cout << "0. End the program.\n\n";
 	cout << "Please input the number: ";
 	return menu;

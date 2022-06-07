@@ -1,16 +1,15 @@
+//everything except for dikstra was done by Damian Pałyska
+
 #pragma once
 #include <vector>
 #include "../station/trainstation.h"
 
 
-//#include "../person/people.h"
-//#include"../train/train.h"
-
 typedef train Train;
 typedef timetable TimeTable;
 
 static int NUMBER_OF_TRAINS = 10; // number of trains coordinator will look through when trying to find a person a train
-static min_time END_OF_ROUTE_STOP = 10;
+static min_time END_OF_ROUTE_STOP = 1;
 class Coordinator
 {;
 private:
@@ -35,18 +34,18 @@ public:
 	void addStation(Station new_stat);
 	Station* getStation(int id);
 	void setStations(vector<Station> stations);
-	void fillTimetable(std::vector<std::pair<Train, Train>>& train_pairs_vec); //@TODO
+	void fillTimetable(std::vector<std::pair<Train, Train>>& train_pairs_vec); //
 	bool assignTrainRoute(Train* cur_train, min_time& temp_time);
 	void moveTrainToStartingStation(int cur_stat_number, min_time temp_time, Train* cur_train);
-	//void removePersonFromMetro();
-
+	
+	
 	int getpozition(int id);
-	vector<Station*> dijkstra(int start, int second);
+	vector<Station*> dijkstra(int start, int second);// done by Michal Bogiel
 
 
 	// methods below might be useful to refactorise the code
-	void AddPersonToTrain(Person& person, Train& train);
-	void HandleTrainOnStation(std::vector<Person*> waiting_people, Train& Train, Station& station); // appends waiting people list, removes people from train
-	void AddWaitingPeopleToTrains(std::vector<Person*> waiting_people, std::vector<Train*> trains_on_station);
-	std::vector<Train*> GetTrainsOnStation(Station& stat);
+	//void AddPersonToTrain(Person& person, Train& train);
+	//void HandleTrainOnStation(std::vector<Person*> waiting_people, Train& Train, Station& station); // appends waiting people list, removes people from train
+	//void AddWaitingPeopleToTrains(std::vector<Person*> waiting_people, std::vector<Train*> trains_on_station);
+	//std::vector<Train*> GetTrainsOnStation(Station& stat);
 };

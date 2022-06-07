@@ -1,5 +1,5 @@
 #pragma once
-
+//all done by Michal Bogiel
 #include "../point/point.h"
 #include <queue>
 #include <vector>

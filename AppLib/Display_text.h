@@ -1,3 +1,4 @@
+//all done by Tomasz Wężowicz
 #pragma once
 #include"MetroApp.h"
 #include<string>

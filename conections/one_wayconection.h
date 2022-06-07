@@ -1,4 +1,5 @@
 #pragma once
+//all done by Michal Bogiel
 #include <string>
 using namespace std;
 class Station;

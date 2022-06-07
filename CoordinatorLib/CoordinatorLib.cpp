@@ -1,5 +1,4 @@
 #include "CoordinatorLib.h"
-	// CoordinatorLib.cpp : Defines the functions for the static library.
 
 	Coordinator::Coordinator() {}
 
@@ -52,7 +51,7 @@ bool Coordinator::assignTrainRoute(Train* cur_train, min_time& temp_time)
 		if (next_station == cur_train->getRoute().back())
 		{
 			next_station->add_timetable(*cur_train, temp_time%1440);
-			temp_time += 1; // 10 is the time of stop at the end of the route of train
+			temp_time += END_OF_ROUTE_STOP;
 			if (temp_time > 24 * 60)
 				return true;
 
@@ -98,7 +97,7 @@ void Coordinator::setTime(min_time starting_time) {
 }
 
 void Coordinator::increaseTime(min_time& simulation_time, min_time metro_start_time)
-{ // as of right now, this means - increasing the time by one minute
+{ // increases the time by one minute
 	++cur_time;
 	++simulation_time;
 	if (cur_time == 1440)
@@ -108,10 +107,8 @@ void Coordinator::increaseTime(min_time& simulation_time, min_time metro_start_t
 	}
 }
 
-void Coordinator::HandleStations(int& people_in_metro) //@TODO when a passeneger gets to the end of his route
+void Coordinator::HandleStations(int& people_in_metro)
 {
-	if (cur_time == 1200)
-		int ha = people_in_metro;
 	for (auto stat_ite = station_vec.begin(); stat_ite != station_vec.end(); ++stat_ite)
 	{
 		std::vector<Train*> trains_on_station;
@@ -159,7 +156,7 @@ void Coordinator::HandleStations(int& people_in_metro) //@TODO when a passeneger
 			}
 			else
 				--people_in_metro;
-				//(*waiting_person_ite); //remove person function should go here
+				//(*waiting_person_ite); //remove person function would go here
 		}
 		(*stat_ite).setwaiting(waiting_list_after_operations);
 	}
@@ -217,7 +214,6 @@ std::pair<double, Station*> Coordinator::CompareRoutes(Station& start_stat, std:
 	
 		if (train_route_ite == train_route.end()) // this means the train reached it's end
 			break;
-		//return std::pair<double, Station*>(100, last_mutual_station);
 	
 	} while ((*per_route_ite) == (*train_route_ite));
 
@@ -346,6 +342,6 @@ vector<Station*> Coordinator::dijkstra(int start, int second)
 	}
 
 	trasa.push_back(&station_vec[poz]);
-	return trasa;//vector stacji
+	return trasa;
 
 }
