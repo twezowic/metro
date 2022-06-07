@@ -1,21 +1,26 @@
-#pragma once
-(sama logika)
+# Metro simulation
 
-aplikacja:
-stworzona klasa App -
-początek:
-tworzymy wektor osób (wydaje mi się że osoby będą musiały być dynamicznie alokowane)
-koordynator dostaje wektor stacji
-koordynator dostaje wektor osób które są na stacjach, znajduje dla nich trasę - wektor stacji przez które mają przejechać
-koordynator daje osobom pociągi bądź dodaje do wektora czekających (ma go stacja) 
-(wektor czekajacych może zrobić jak dwustronny, bo będzie on działał jak kolejka chyba że dla danej osoby żaden pociąg nie pasuje)
+# Diagram klas
+![diagram](https://gitlab-stud.elka.pw.edu.pl/proi.22l-projekty/208.3-metro/-/blob/main/diagram.png)
 
-app wywołuje pętlę w czasie (z częstotliwością określoną)
-while true:
-	wywołaj w koordynatorze funckję - przejdź przez wszystkie stacje metra, i sprawdź czy na jakiejś stacji jest pociąg (patrząc na rozkład) - dostaje wektor referencji na pociąg
-	będąc na stacji A:
-		poproś o wektor osób w pociągu, sprawdź która z nich wychodzi.
-		dodaj do pociągów osoby które czekały już wcześniej na stacji.
-		dodaj do pociągów osoby które wyszły z innego pociągu
-		dodaj do dwustronnego wektora osoby które są teraz na stacji.
-		usuń osoby które są na stacji końcowej	
+
+# Hierarchia klas:
+
+- klasa Coordinator
+Zajmuje się połączeniem poszczególnych klas metra.
+Przy starcie metra jego zadaniem jest wypełnenie planu odjazdów dla każdej stacji.
+Oprócz tego, w nim znajduje się główna logika programu - funkcja "HandleStations" która w każdej swojej iteracji
+"rusza" czas lokalny o 1, i wykonuje wszelkie obliczenia związane z działaniem symulacji.
+- klasa App
+Nie jest ściśle związana z logiką programu, jej zadaniem jest przeczytanie i obróbka danych dostarczonych z plików.
+Następnie, koordynuje ona wyświetlanie tekstu przez display, oraz zajmuje się pętlą w której koordynator wykonuje swoje zadania.
+- klasa Display_text
+Zajmuje się wyświetlaniem podstawowych informacji w konsoli
+Pozwala wyświetlić stacje i pociągi wraz z ich zapełnieniem oraz mapę metra.
+- klasa Display
+Zajmuje się tworzeniem pliku html który przedstawia aktualny stan metra
+Główna metoda create_map na początku tworzy nagłówek pliku svg a następnie generuje linie pomiędzy stacjami i punkty w miejscach stacji.
+Potem dodawane są pociągi i na samym końcu skrypt umożliwiający wyświetlanie informacji o stacjach i pociągach po najechaniu na nie myszką.
+
+# Mapa
+![mapa](https://gitlab-stud.elka.pw.edu.pl/proi.22l-projekty/208.3-metro/-/blob/main/mapa.png)
