@@ -1,7 +1,7 @@
 # Metro simulation
 
 # Diagram klas
-![diagram](https://gitlab-stud.elka.pw.edu.pl/proi.22l-projekty/208.3-metro/-/blob/main/diagram.png)
+![diagram](diagram.png)
 
 
 # Hierarchia klas:
@@ -23,4 +23,4 @@ Główna metoda create_map na początku tworzy nagłówek pliku svg a następnie
 Potem dodawane są pociągi i na samym końcu skrypt umożliwiający wyświetlanie informacji o stacjach i pociągach po najechaniu na nie myszką.
 
 # Mapa
-![mapa](https://gitlab-stud.elka.pw.edu.pl/proi.22l-projekty/208.3-metro/-/blob/main/mapa.png)
+![mapa](mapa.png)
