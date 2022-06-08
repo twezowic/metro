@@ -1,3 +1,7 @@
+﻿# Autorzy:
+ Michał Bogiel, 
+ Tomasz Wężowicz, 
+ Damian Pałyska 
 # Metro simulation
 Celem naszego projektu jest symulowanie godziny szczytu w metrze.
 Na początku nasz program dostaje pliki csv z danymi o stacjach, połączeniach i pociągach.
@@ -12,6 +16,7 @@ W momencie gdy wszyscy ludzie opuszczą metro, wyświetli się o tym komunikat, 
 
 # Diagram klas
 ![diagram](diagram.png)
+
 
 
 # Hierarchia klas:
@@ -32,5 +37,15 @@ Zajmuje się tworzeniem pliku html który przedstawia aktualny stan metra
 Główna metoda create_map na początku tworzy nagłówek pliku svg a następnie generuje linie pomiędzy stacjami i punkty w miejscach stacji.
 Potem dodawane są pociągi i na samym końcu skrypt umożliwiający wyświetlanie informacji o stacjach i pociągach po najechaniu na nie myszką.
 
-# Mapa
+
+- klasa Connection\
+Przechowuje referencje na łączone stacje i czas przejazdu między nimi
+- klasa Station\
+Przechowuje informacje o stacji : współrzędne, ludzie oczekujący na niej,i rozkład.
+- klasa Timetable\
+klasa zajmuje się przechowywaniem informacji o jakiej godzinie przyjedzie najbliższy pociąg na stacje i zwróceniem informacji o nim
+- klasa Train\
+klasa zajmuje się trzymaniem informacji na jaką stacje jedzie pociąg , jaką ma trase,pojemność i kto nim jedzie. Pozadto wylicza jego współrzędne
+- klasa punkt\
+reprezentuje pare współrzędnych z id  # Mapa
 ![mapa](mapa.png)
